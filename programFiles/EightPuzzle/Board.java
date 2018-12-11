@@ -24,7 +24,7 @@ public class Board {
 	*/
 	public int hamming() {
 		// YOUR CODE HERE
-		return 0;
+		return(0);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class Board {
 	*/
 	public int manhattan() {
 		// YOUR CODE HERE
-		return 0;
+		return(0);
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class Board {
 	*/
 	public boolean equals( Object o) {
 		// YOUR CODE HERE
-		return false;
+		return(false);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class Board {
 	*/
 	public Iterable<Board> neighbours() {
 		// YOUR CODE HERE
-		return null;
+		return(null);
 	}
 	
 	/**
@@ -68,6 +68,6 @@ public class Board {
 	*/
 	public String toString() {
 		// YOUR CODE HERE
-		return "";
+		return("");
 	}
 }

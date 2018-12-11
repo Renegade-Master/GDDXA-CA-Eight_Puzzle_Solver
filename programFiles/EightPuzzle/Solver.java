@@ -25,7 +25,7 @@ public class Solver {
 	*/
 	public boolean isSolvable() {
 		// YOUR CODE HERE
-		return false;
+		return(false);
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class Solver {
 	*/
 	public int moves() {
 		// YOUR CODE HERE
-		return 0;
+		return(0);
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class Solver {
 	*/
 	public Iterable<Board> solution() {
 		// YOUR CODE HERE
-		return null;
+		return(null);
 	}
 	
 	/**
