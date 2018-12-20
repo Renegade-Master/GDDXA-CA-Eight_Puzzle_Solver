@@ -75,11 +75,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="74" />
-    <option name="y" value="-8" />
-    <option name="width" value="1253" />
-    <option name="height" value="1447" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="344" />
+    <option name="y" value="94" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -186,16 +186,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="74" y="-8" width="2494" height="1456" extended-state="6" />
+    <frame x="344" y="94" width="1400" height="1000" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10558751" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19179104" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32879817" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.5017301" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.32879817" />
       <window_info anchor="bottom" id="Message" order="0" />
