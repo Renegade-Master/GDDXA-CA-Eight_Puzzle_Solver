@@ -45,7 +45,7 @@ public class Solver {
 
         if(gridWidth % 2 != 0) {
             System.out.println("\nGrid Width is ODD");
-            if (true) {
+            if (this.m_Board.inversions() % 2 == 0) {
                 System.out.println("\nNumber of inversions is EVEN");
                 solvable = true;
             }
@@ -54,14 +54,14 @@ public class Solver {
             System.out.println("\nGrid Width is EVEN");
             if (true) {
                 System.out.println("\nBlank is on EVEN bottom row");
-                if (true) {
+                if (this.m_Board.inversions() % 2 != 0) {
                     System.out.println("\nNumber of inversions is ODD");
                     solvable = true;
                 }
             }
             else if (true) {
                 System.out.println("\nBlank is on ODD bottom row");
-                if (true) {
+                if (this.m_Board.inversions() % 2 == 0) {
                     System.out.println("\nNumber of inversions is EVEN");
                     solvable = true;
                 }

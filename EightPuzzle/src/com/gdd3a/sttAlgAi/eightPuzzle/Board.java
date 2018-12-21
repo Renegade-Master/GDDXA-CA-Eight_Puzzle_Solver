@@ -9,6 +9,7 @@ package com.gdd3a.sttAlgAi.eightPuzzle;
 
 public class Board {
     public int[] m_tiles;
+    private int invers;
 
     /**
      *	@desc	Board Object Constructor
@@ -22,6 +23,7 @@ public class Board {
      */
     public Board(int [][] tiles) {
         m_tiles = new int[tiles.length * tiles.length];
+        invers = Integer.MIN_VALUE;
 
         int z = 0;
         for (int i = 0; i < tiles.length; i++) {
@@ -84,5 +86,24 @@ public class Board {
             System.out.println();
         }
         return(null);
+    }
+
+    /**
+     *	@desc	...
+     */
+    public int inversions() {
+        if(this.invers == Integer.MIN_VALUE) {
+            this.invers = 0;
+            for (int i = 0; i < this.m_tiles.length; i++) {
+                for (int j = i + 1; j < this.m_tiles.length; ) {
+                    if (this.m_tiles[i] > this.m_tiles[j++]) {
+                        invers++;
+                    }
+                }
+                System.out.println("Inversions @ " + i + ": " + this.invers);
+            }
+        System.out.println("Total Inversions: " + this.invers);
+        }
+        return(this.invers);
     }
 }
