@@ -77,9 +77,9 @@ public class Board {
      *	@desc	...
      */
     public String toString() {
-        for (int i = 0; i < m_tiles.length;) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(m_tiles[i++] + "\t");
+        for (int i = 0; i < this.m_tiles.length;) {
+            for (int j = 0; j < Math.sqrt(this.m_tiles.length); j++) {
+                System.out.print(this.m_tiles[i++] + "\t");
             }
             System.out.println();
         }

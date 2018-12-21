@@ -40,11 +40,35 @@ public class Solver {
      *          && ((blank on odd row from bottom) == (#inversions even)))
      */
     public boolean isSolvable() {
-        double sqroot = Math.sqrt(this.m_Board.m_tiles.length);
-        if((int)sqroot * (int)sqroot == this.m_Board.m_tiles.length){
-            System.out.println("Number of Inversion are EVEN");
+        boolean solvable = false;
+        double gridWidth = Math.sqrt(this.m_Board.m_tiles.length);
+
+        if(gridWidth % 2 != 0) {
+            System.out.println("\nGrid Width is ODD");
+            if (true) {
+                System.out.println("\nNumber of inversions is EVEN");
+                solvable = true;
+            }
         }
-        return(false);
+        else {
+            System.out.println("\nGrid Width is EVEN");
+            if (true) {
+                System.out.println("\nBlank is on EVEN bottom row");
+                if (true) {
+                    System.out.println("\nNumber of inversions is ODD");
+                    solvable = true;
+                }
+            }
+            else if (true) {
+                System.out.println("\nBlank is on ODD bottom row");
+                if (true) {
+                    System.out.println("\nNumber of inversions is EVEN");
+                    solvable = true;
+                }
+            }
+        }
+
+        return(solvable);
     }
 
     /**
