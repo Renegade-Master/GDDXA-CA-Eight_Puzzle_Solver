@@ -6,31 +6,49 @@
  */
 package com.gdd3a.sttAlgAi.eightPuzzle;
 
+import java.lang.Math;
 import edu.princeton.cs.algs4.In;
 
+
 public class Solver {
+    private Board m_Board;
 
     /**
      *	@desc	Object Constructor
      *	@param	initial	- A Board object arranged in its initial configuration.
-     *	@funct	...	- ...
+     *	@funct	isSolvable  - ...
+     *          moves       - ...
+     *          solution    - ...
      */
     public Solver(Board initial) {
-        // YOUR CODE HERE
+        m_Board = initial;
     }
 
     /**
-     *	@desc	...
-     *	@funct	...	- ...
+     *	@desc   If the grid width is odd, then the number of inversions in a
+     *          	solvable situation is even.
+     *          If the grid width is even, and the blank is on an even row
+     *              counting from the bottom (second-last, fourth-last etc),
+     *              then the number of inversions in a solvable situation is
+     *              odd.
+     *          If the grid width is even, and the blank is on an odd row
+     *              counting from the bottom (last, third-last, fifth-last etc)
+     *              then the number of inversions in a solvable situation is
+     *              even.
+     *
+     *          ((grid width odd) && (#inversions even)) || ((grid width even)
+     *          && ((blank on odd row from bottom) == (#inversions even)))
      */
     public boolean isSolvable() {
-        // YOUR CODE HERE
+        double sqroot = Math.sqrt(this.m_Board.m_tiles.length);
+        if((int)sqroot * (int)sqroot == this.m_Board.m_tiles.length){
+            System.out.println("Number of Inversion are EVEN");
+        }
         return(false);
     }
 
     /**
      *	@desc	...
-     *	@funct	...	- ...
      */
     public int moves() {
         // YOUR CODE HERE
@@ -39,7 +57,6 @@ public class Solver {
 
     /**
      *	@desc	...
-     *	@funct	...	- ...
      */
     public Iterable<Board> solution() {
         // YOUR CODE HERE
@@ -49,21 +66,8 @@ public class Solver {
     /**
      *	@desc	...
      *	@param	args	- Command Line arguments to the program.
-     *	@funct	...	- ...
      */
     public static void main(String [] args) {
-        /*  -- Old Program code from reading in Boards from the Keyboard.
-        int N = StdIn.readInt();
-        int [][] tiles = new int [N][N];
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                tiles[i][j] = StdIn.readInt();
-            }
-            System.out.println();
-        }
-        */
-
         String filename = null;
         In in = new In();
 
@@ -84,6 +88,7 @@ public class Solver {
                     "occurred.\nPlease check your input.");
             System.exit(1);
         }
+
         int N = in.readInt();
         int[][] tiles = new int [N][N];
 
