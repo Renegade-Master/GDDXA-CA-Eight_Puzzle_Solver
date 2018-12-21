@@ -12,7 +12,7 @@ public class Solver {
 
     /**
      *	@desc	Object Constructor
-     *	@param	initial	- A Board object arranged in its initial positions.
+     *	@param	initial	- A Board object arranged in its initial configuration.
      *	@funct	...	- ...
      */
     public Solver(Board initial) {
@@ -87,15 +87,21 @@ public class Solver {
         int N = in.readInt();
         int[][] tiles = new int [N][N];
 
+        System.out.println("Template:");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 tiles[i][j] = in.readInt();
-                //System.out.print(tiles[i][j] + "\t");
+                System.out.print(tiles[i][j] + "\t");
             }
-            //System.out.println();
+            System.out.println();
         }
 
+        System.out.println("\nAfter:");
+
         Board initial = new Board(tiles);
+
+        System.out.println("\ntoString:");
+        initial.toString();
 
         Solver solver = new Solver(initial);
 
@@ -106,10 +112,10 @@ public class Solver {
         */
 
         if(!solver.isSolvable()) {
-            System.out.println("No solution possible");
+            System.out.println("\nNo solution possible");
         }
         else {
-            System.out.println("Minimum number of moves = " + solver.moves());
+            System.out.println("\nMinimum number of moves = " + solver.moves());
         }
     }
 }

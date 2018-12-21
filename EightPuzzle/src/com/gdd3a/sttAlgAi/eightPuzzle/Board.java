@@ -8,7 +8,7 @@
 package com.gdd3a.sttAlgAi.eightPuzzle;
 
 public class Board {
-    public int[][] m_tiles;
+    public int[] m_tiles;
 
     /**
      *	@desc	Board Object Constructor
@@ -17,7 +17,16 @@ public class Board {
      *	@funct	...	- ...
      */
     public Board(int [][] tiles) {
-        m_tiles = new int[tiles.length][tiles[0].length];
+        m_tiles = new int[tiles.length * tiles.length];
+
+        int z = 0;
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+                m_tiles[z++] = tiles[i][j];
+                System.out.print(m_tiles[z - 1] + "\t");
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -50,11 +59,9 @@ public class Board {
     public boolean equals(Board o) {
         boolean valid = true;
 
-        for (int i = 0; i < this.m_tiles.length; i++) {
-            for (int j = 0; j < this.m_tiles[0].length; j++) {
-                if(this.m_tiles[i][j] != o.m_tiles[i][j]) {
-                    valid = false;
-                }
+        for (int i = 0; i < m_tiles.length; i++) {
+            if(this.m_tiles[i] != o.m_tiles[i]) {
+                valid = false;
             }
         }
 
@@ -79,9 +86,9 @@ public class Board {
      *	@funct	...	- ...
      */
     public String toString() {
-        for (int i = 0; i < this.m_tiles.length; i++) {
-            for (int j = 0; j < this.m_tiles[0].length; j++) {
-                System.out.print(this.m_tiles[i][j] + "\t");
+        for (int i = 0; i < m_tiles.length;) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(m_tiles[i++] + "\t");
             }
             System.out.println();
         }
