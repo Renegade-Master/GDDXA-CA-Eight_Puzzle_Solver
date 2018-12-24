@@ -4,6 +4,7 @@
  *	@description	...
  *
  */
+
 package com.gdd3a.sttAlgAi.eightPuzzle;
 
 import java.lang.Math;
@@ -40,14 +41,13 @@ public class Solver {
      *          && ((blank on odd row from bottom) == (#inversions even)))
      */
     public boolean isSolvable() {
-        boolean solvable = false;
         double gridWidth = Math.sqrt(this.m_Board.m_tiles.length);
 
         if(gridWidth % 2 != 0) {
             System.out.println("\nGrid Width is ODD");
             if (this.m_Board.inversions() % 2 == 0) {
                 System.out.println("\nNumber of inversions is EVEN");
-                solvable = true;
+                return(true);
             }
         }
         else {
@@ -56,19 +56,19 @@ public class Solver {
                 System.out.println("\nBlank is on EVEN bottom row");
                 if (this.m_Board.inversions() % 2 != 0) {
                     System.out.println("\nNumber of inversions is ODD");
-                    solvable = true;
+                    return(true);
                 }
             }
             else if (true) {
                 System.out.println("\nBlank is on ODD bottom row");
                 if (this.m_Board.inversions() % 2 == 0) {
                     System.out.println("\nNumber of inversions is EVEN");
-                    solvable = true;
+                    return(true);
                 }
             }
         }
 
-        return(solvable);
+        return(false);
     }
 
     /**
@@ -120,17 +120,17 @@ public class Solver {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 tiles[i][j] = in.readInt();
-                System.out.print(tiles[i][j] + "\t");
+                //System.out.print(tiles[i][j] + "\t");
             }
-            System.out.println();
+            //System.out.println();
         }
 
-        System.out.println("\nAfter:");
+        //System.out.println("\nAfter:");
 
         Board initial = new Board(tiles);
 
-        System.out.println("\ntoString:");
-        initial.toString();
+        //System.out.println("\ntoString:");
+        //initial.toString();
 
         Solver solver = new Solver(initial);
 
@@ -144,7 +144,8 @@ public class Solver {
             System.out.println("\nNo solution possible");
         }
         else {
-            System.out.println("\nMinimum number of moves = " + solver.moves());
+            System.out.println("\nSolution possible");
+            System.out.println("Minimum number of moves = " + solver.moves());
         }
     }
 }

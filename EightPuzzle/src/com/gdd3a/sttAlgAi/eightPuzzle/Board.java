@@ -95,12 +95,12 @@ public class Board {
         if(this.invers == Integer.MIN_VALUE) {
             this.invers = 0;
             for (int i = 0; i < this.m_tiles.length; i++) {
-                for (int j = i + 1; j < this.m_tiles.length; ) {
-                    if (this.m_tiles[i] > this.m_tiles[j++]) {
+                for (int j = i + 1; j < this.m_tiles.length; j++) {
+                    if (this.m_tiles[j] > this.m_tiles[i]) {
                         invers++;
                     }
                 }
-                System.out.println("Inversions @ " + i + ": " + this.invers);
+                //System.out.println("Inversions @ " + i + ": " + this.invers);
             }
         System.out.println("Total Inversions: " + this.invers);
         }
