@@ -8,8 +8,10 @@
 package com.gdd3a.sttAlgAi.eightPuzzle;
 
 public class Board {
+    public int m_order;
     public int[] m_tiles;
-    private int invers;
+    private int m_invers;
+    private int m_zeRow;
 
     /**
      *	@desc	Board Object Constructor
@@ -21,9 +23,11 @@ public class Board {
      *          neighbours  - ...
      *          toString    - ...
      */
-    public Board(int [][] tiles) {
-        m_tiles = new int[tiles.length * tiles.length];
-        invers = Integer.MIN_VALUE;
+    public Board(int N, int [][] tiles) {
+        this.m_order = N;
+        this.m_tiles = new int[tiles.length * tiles.length];
+        this.m_invers = Integer.MIN_VALUE;
+        this.m_zeRow = Integer.MIN_VALUE;
 
         int z = 0;
         for (int i = 0; i < tiles.length; i++) {
@@ -92,18 +96,36 @@ public class Board {
      *	@desc	...
      */
     public int inversions() {
-        if(this.invers == Integer.MIN_VALUE) {
-            this.invers = 0;
+        if(this.m_invers == Integer.MIN_VALUE) {
+            this.m_invers = 0;
             for (int i = 0; i < this.m_tiles.length; i++) {
                 for (int j = i + 1; j < this.m_tiles.length; j++) {
                     if (this.m_tiles[j] > this.m_tiles[i]) {
-                        invers++;
+                        this.m_invers++;
                     }
                 }
                 //System.out.println("Inversions @ " + i + ": " + this.invers);
             }
-        System.out.println("Total Inversions: " + this.invers);
+        System.out.println("Total Inversions: " + this.m_invers);
         }
-        return(this.invers);
+        return(this.m_invers);
+    }
+
+    /**
+     *	@desc	...
+     */
+    public int zeroRow() {
+        if(this.m_zeRow == Integer.MIN_VALUE) {
+            this.m_zeRow = 0;
+            for (int i = this.m_tiles.length - 1; i > 0; i--) {
+                //this.m_zeRow++;
+                if (this.m_tiles[i] == 0) {
+                    this.m_zeRow = i % m_order;
+                }
+            }
+        System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
+        }
+
+        return(this.m_zeRow);
     }
 }
