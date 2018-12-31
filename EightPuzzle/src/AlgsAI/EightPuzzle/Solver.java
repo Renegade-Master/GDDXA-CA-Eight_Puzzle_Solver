@@ -5,7 +5,7 @@
  *
  */
 
-package com.gdd3a.sttAlgAi.eightPuzzle;
+package AlgsAI.EightPuzzle;
 
 import java.lang.Math;
 import edu.princeton.cs.algs4.In;

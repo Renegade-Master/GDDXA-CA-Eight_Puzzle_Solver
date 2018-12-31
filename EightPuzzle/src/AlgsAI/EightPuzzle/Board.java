@@ -5,7 +5,7 @@
  *
  */
 
-package com.gdd3a.sttAlgAi.eightPuzzle;
+package AlgsAI.EightPuzzle;
 
 public class Board {
     public int m_order;
