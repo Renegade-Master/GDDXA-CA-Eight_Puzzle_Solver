@@ -44,7 +44,7 @@ public class Board {
      */
     public int hamming() {
         // YOUR CODE HERE
-        return(0);
+        return(Integer.MIN_VALUE);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Board {
      */
     public int manhattan() {
         // YOUR CODE HERE
-        return(0);
+        return(Integer.MIN_VALUE);
     }
 
     /**
