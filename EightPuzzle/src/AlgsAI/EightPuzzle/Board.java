@@ -120,7 +120,7 @@ public class Board {
             for (int i = this.m_tiles.length - 1; i > 0; i--) {
                 //this.m_zeRow++;
                 if (this.m_tiles[i] == 0) {
-                    this.m_zeRow = i % m_order;
+                    this.m_zeRow = Math.abs((int)Math.ceil((double)i / (double)this.m_order) - this.m_order);
                 }
             }
         System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
