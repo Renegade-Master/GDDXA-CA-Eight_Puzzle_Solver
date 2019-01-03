@@ -17,11 +17,13 @@ public class Board {
      *	@desc	Board Object Constructor
      *	@param	tiles	- Two-Dimensional Array of Int values that holds the
      *                 	  default configuration of the Board.
-     *	@funct	hamming     - ...
-     *          manhattan   - ...
-     *          equals      - ...
-     *          neighbours  - ...
-     *          toString    - ...
+     *	@funct	hamming     - Return count of out-of-place blocks.
+     *          manhattan   - Return Manhattan distance to Goal State.
+     *          equals      - Return Boolean for Board equality check.
+     *          neighbours  - Return iterable of neighbouring Boards.
+     *          toString    - Return Board String representation.
+     *          inversions  - Return the number of Inversions of the Board.
+     *          zeroRow     - Return the Board row containing a 0.
      */
     public Board(int N, int [][] tiles) {
         this.m_order = N;
@@ -33,14 +35,14 @@ public class Board {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
                 m_tiles[z++] = tiles[i][j];
-                System.out.print(m_tiles[z - 1] + "\t");
+                //System.out.print(m_tiles[z - 1] + "\t");
             }
-            System.out.println();
+            //System.out.println();
         }
     }
 
     /**
-     *	@desc	...
+     *	@desc	Return count of out-of-place blocks.
      */
     public int hamming() {
         // YOUR CODE HERE
@@ -48,7 +50,7 @@ public class Board {
     }
 
     /**
-     *	@desc	...
+     *	@desc	Return Manhattan distance to Goal State.
      */
     public int manhattan() {
         // YOUR CODE HERE
@@ -72,7 +74,7 @@ public class Board {
     }
 
     /**
-     *	@desc	...
+     *	@desc	Return iterable of neighbouring Boards.
      */
     public Iterable<Board> neighbours() {
         // YOUR CODE HERE
@@ -80,7 +82,7 @@ public class Board {
     }
 
     /**
-     *	@desc	...
+     *	@desc	Return Board String representation.
      */
     public String toString() {
         for (int i = 0; i < this.m_tiles.length;) {
@@ -93,7 +95,7 @@ public class Board {
     }
 
     /**
-     *	@desc	...
+     *	@desc	Return the number of Inversions of the Board.
      */
     public int inversions() {
         if(this.m_invers == Integer.MIN_VALUE) {
@@ -117,7 +119,7 @@ public class Board {
     }
 
     /**
-     *	@desc	...
+     *	@desc	Return the Board row containing a 0.
      */
     public int zeroRow() {
         if(this.m_zeRow == Integer.MIN_VALUE) {
@@ -125,7 +127,8 @@ public class Board {
             for (int i = this.m_tiles.length - 1; i > 0; i--) {
                 //this.m_zeRow++;
                 if (this.m_tiles[i] == 0) {
-                    this.m_zeRow = Math.abs((int)Math.ceil((double)i / (double)this.m_order) - this.m_order);
+                    this.m_zeRow = Math.abs((int)Math.ceil((double)i
+                                / (double)this.m_order) - this.m_order);
                 }
             }
         //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");

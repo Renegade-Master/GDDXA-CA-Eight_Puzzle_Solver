@@ -17,28 +17,16 @@ public class Solver {
     /**
      *	@desc	Object Constructor
      *	@param	initial	- A Board object arranged in its initial configuration.
-     *	@funct	isSolvable  - ...
-     *          moves       - ...
-     *          solution    - ...
+     *	@funct	isSolvable  - Return Boolean Solvable status.
+     *          moves       - Return min number of moves to get to Goal State.
+     *          solution    - Return iterable Board solutions.
      */
     public Solver(Board initial) {
-        m_Board = initial;
+        this.m_Board = initial;
     }
 
     /**
-     *	@desc   If the grid width is odd, then the number of inversions in a
-     *          	solvable situation is even.
-     *          If the grid width is even, and the blank is on an even row
-     *              counting from the bottom (second-last, fourth-last etc),
-     *              then the number of inversions in a solvable situation is
-     *              odd.
-     *          If the grid width is even, and the blank is on an odd row
-     *              counting from the bottom (last, third-last, fifth-last etc)
-     *              then the number of inversions in a solvable situation is
-     *              even.
-     *
-     *          ((grid width odd) && (#inversions even)) || ((grid width even)
-     *          && ((blank on odd row from bottom) == (#inversions even)))
+     *	@desc   Checks to see if a Board is solvable from the given state.
      */
     public boolean isSolvable() {
         double gridWidth = Math.sqrt(this.m_Board.m_tiles.length);
@@ -49,7 +37,7 @@ public class Solver {
                 System.out.println("\tNumber of inversions is EVEN");
                 return(true);
             } else {
-                System.out.println("\tNumber of inversions is ODD");
+                System.out.println("--> Number of inversions is ODD");
                 return(false);
             }
         } else {
@@ -60,7 +48,7 @@ public class Solver {
                     System.out.println("\t\tNumber of inversions is EVEN");
                     return(true);
                 } else {
-                    System.out.println("\t\tNumber of inversions is ODD");
+                    System.out.println("\t--> Number of inversions is ODD");
                     return(false);
                 }
             } else {
@@ -69,13 +57,11 @@ public class Solver {
                     System.out.println("\t\tNumber of inversions is ODD");
                     return(true);
                 } else {
-                    System.out.println("\t\tNumber of inversions is EVEN");
+                    System.out.println("\t--> Number of inversions is EVEN");
                     return(false);
                 }
             }
         }
-
-        //return(false);
     }
 
     /**
@@ -123,7 +109,6 @@ public class Solver {
         int N = in.readInt();
         int[][] tiles = new int [N][N];
 
-        System.out.println("Template:");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 tiles[i][j] = in.readInt();
@@ -132,12 +117,9 @@ public class Solver {
             //System.out.println();
         }
 
-        //System.out.println("\nAfter:");
-
         Board initial = new Board(N, tiles);
-
-        //System.out.println("\ntoString:");
-        //initial.toString();
+        System.out.println("Template:");
+        initial.toString();
 
         Solver solver = new Solver(initial);
 
