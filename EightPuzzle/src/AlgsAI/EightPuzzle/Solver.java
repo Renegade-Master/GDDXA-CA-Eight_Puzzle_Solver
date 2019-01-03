@@ -44,31 +44,38 @@ public class Solver {
         double gridWidth = Math.sqrt(this.m_Board.m_tiles.length);
 
         if(gridWidth % 2 != 0) {
-            System.out.println("\nGrid Width is ODD");
+            System.out.println("Grid Width is ODD");
             if (this.m_Board.inversions() % 2 == 0) {
-                System.out.println("\nNumber of inversions is EVEN");
+                System.out.println("\tNumber of inversions is EVEN");
                 return(true);
+            } else {
+                System.out.println("\tNumber of inversions is ODD");
+                return(false);
             }
-        }
-        else {
-            System.out.println("\nGrid Width is EVEN");
+        } else {
+            System.out.println("Grid Width is EVEN");
             if (this.m_Board.zeroRow() % 2 != 0) {
-                System.out.println("\nBlank is on ODD bottom row");
+                System.out.println("\tBlank is on ODD bottom row");
                 if (this.m_Board.inversions() % 2 == 0) {
-                    System.out.println("\nNumber of inversions is EVEN");
+                    System.out.println("\t\tNumber of inversions is EVEN");
                     return(true);
+                } else {
+                    System.out.println("\t\tNumber of inversions is ODD");
+                    return(false);
                 }
-            }
-            else {
-                System.out.println("\nBlank is on EVEN bottom row");
+            } else {
+                System.out.println("\tBlank is on EVEN bottom row");
                 if (this.m_Board.inversions() % 2 != 0) {
-                    System.out.println("\nNumber of inversions is ODD");
+                    System.out.println("\t\tNumber of inversions is ODD");
                     return(true);
+                } else {
+                    System.out.println("\t\tNumber of inversions is EVEN");
+                    return(false);
                 }
             }
         }
 
-        return(false);
+        //return(false);
     }
 
     /**

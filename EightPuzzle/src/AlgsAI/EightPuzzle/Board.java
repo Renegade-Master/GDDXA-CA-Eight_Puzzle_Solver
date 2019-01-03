@@ -99,14 +99,19 @@ public class Board {
         if(this.m_invers == Integer.MIN_VALUE) {
             this.m_invers = 0;
             for (int i = 0; i < this.m_tiles.length; i++) {
+                int added = 0;
                 for (int j = i + 1; j < this.m_tiles.length; j++) {
-                    if (this.m_tiles[j] > this.m_tiles[i]) {
-                        this.m_invers++;
+                    if(this.m_tiles[j] != 0 && this.m_tiles[i] != 0) {
+                        if (this.m_tiles[j] < this.m_tiles[i]) {
+                            //this.m_invers++;
+                            added++;
+                        }
                     }
                 }
-                //System.out.println("Inversions @ " + i + ": " + this.invers);
+                this.m_invers += added;
+                //System.out.println("Inversions @ " + i + ": " + added);
             }
-        System.out.println("Total Inversions: " + this.m_invers);
+        //System.out.println("Total Inversions: " + this.m_invers);
         }
         return(this.m_invers);
     }
@@ -123,9 +128,9 @@ public class Board {
                     this.m_zeRow = Math.abs((int)Math.ceil((double)i / (double)this.m_order) - this.m_order);
                 }
             }
-        System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
+        //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
         }
 
-        return(this.m_zeRow);
+        return(this.m_zeRow + 1);
     }
 }
