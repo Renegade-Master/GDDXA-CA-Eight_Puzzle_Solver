@@ -118,8 +118,7 @@ public class Solver {
         }
 
         Board initial = new Board(N, tiles);
-        System.out.println("Template:");
-        System.out.println(initial.toString());
+        System.out.println("Template:\n" + initial.toString());
 
         Solver solver = new Solver(initial);
 

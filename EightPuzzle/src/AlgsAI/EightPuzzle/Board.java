@@ -7,7 +7,7 @@
 
 package AlgsAI.EightPuzzle;
 
-import java.util.Arrays;
+//import
 
 public class Board {
     private int m_order;
@@ -86,14 +86,15 @@ public class Board {
     /**
      *	@desc	Return Board String representation.
      */
-    public String toString() {
+    public String toString() {StringBuffer temp = new StringBuffer();
         for (int i = 0; i < this.m_tiles.length;) {
-            for (int j = 0; j < Math.sqrt(this.m_tiles.length); j++) {
-                System.out.print(this.m_tiles[i++] + "\t");
+            for (int j = 0; j < this.m_order; j++) {
+                temp.append(this.m_tiles[i++] + "\t");
             }
-            System.out.println();
+            temp.append("\n");
         }
-        return(Arrays.toString(this.m_tiles) + "\n");
+
+        return(temp.toString());
     }
 
     /**
