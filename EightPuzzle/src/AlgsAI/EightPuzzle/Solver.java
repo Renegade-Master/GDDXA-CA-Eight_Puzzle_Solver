@@ -103,7 +103,7 @@ public class Solver {
         }catch(Exception e){
             System.out.println("No such file, or some other error has " +
                     "occurred.\nPlease check your input.");
-            System.exit(1);
+            System.exit(-1);
         }
 
         int N = in.readInt();
@@ -119,7 +119,7 @@ public class Solver {
 
         Board initial = new Board(N, tiles);
         System.out.println("Template:");
-        initial.toString();
+        System.out.println(initial.toString());
 
         Solver solver = new Solver(initial);
 
@@ -127,9 +127,7 @@ public class Solver {
         for (Board board : solver.solution()) {
             System.out.println(board);
         }
-        */
-
-        if(!solver.isSolvable()) {
+*/        if(!solver.isSolvable()) {
             System.out.println("\nNo solution possible");
         }
         else {

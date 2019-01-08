@@ -7,9 +7,11 @@
 
 package AlgsAI.EightPuzzle;
 
+import java.util.Arrays;
+
 public class Board {
-    public int m_order;
-    public int[] m_tiles;
+    private int m_order;
+    int[] m_tiles;
     private int m_invers;
     private int m_zeRow;
 
@@ -25,16 +27,16 @@ public class Board {
      *          inversions  - Return the number of Inversions of the Board.
      *          zeroRow     - Return the Board row containing a 0.
      */
-    public Board(int N, int [][] tiles) {
+    Board(int N, int [][] tiles) {
         this.m_order = N;
         this.m_tiles = new int[tiles.length * tiles.length];
         this.m_invers = Integer.MIN_VALUE;
         this.m_zeRow = Integer.MIN_VALUE;
 
         int z = 0;
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles.length; j++) {
-                m_tiles[z++] = tiles[i][j];
+        for (int[] i : tiles) {
+            for (int j : i) {
+                this.m_tiles[z++] = j;
                 //System.out.print(m_tiles[z - 1] + "\t");
             }
             //System.out.println();
@@ -91,7 +93,7 @@ public class Board {
             }
             System.out.println();
         }
-        return(null);
+        return(Arrays.toString(this.m_tiles) + "\n");
     }
 
     /**
@@ -119,7 +121,7 @@ public class Board {
     }
 
     /**
-     *	@desc	Return the Board row containing a 0.
+     *	@desc	Return the Board row containing a '0'.
      */
     public int zeroRow() {
         if(this.m_zeRow == Integer.MIN_VALUE) {
