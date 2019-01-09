@@ -87,8 +87,8 @@ public class Board {
             }
             if(i != comp) {
                 //System.out.println("Tile " + i + " is in the wrong Position.\n");
-                System.out.println("\tAdding " + this.manhattanDist(comp,i)
-                        + " to Board Manhattan score.");
+                /*System.out.println("\tAdding " + this.manhattanDist(comp,i)
+                        + " to Board Manhattan score.");*/
                 this.m_manhattan += this.manhattanDist(comp,i);
             }
             else {
@@ -191,14 +191,24 @@ public class Board {
      *          should be.
      */
     private int manhattanDist(double position, double tile) {
-        double col = tile % this.m_order;
-        if(col == 0) {
-            col = this.m_order;
+        // Where is it?
+        double oldCol = position % this.m_order;
+        if(oldCol == 0) {
+            oldCol = this.m_order;
         }
-        double row = Math.ceil(tile / this.m_order);
+        double oldRow = Math.ceil(position / this.m_order);
 
+        // Where should it go?
+        double newCol = tile % this.m_order;
+        if(newCol == 0) {
+            newCol = this.m_order;
+        }
+        double newRow = Math.ceil(tile / this.m_order);
 
+        // How long does it take to get there?
+        double colDiff = Math.abs(newCol - oldCol);
+        double rowDiff = Math.abs(newRow - oldRow);
 
-        return(Integer.MIN_VALUE);
+        return((int)(colDiff + rowDiff));
     }
 }
