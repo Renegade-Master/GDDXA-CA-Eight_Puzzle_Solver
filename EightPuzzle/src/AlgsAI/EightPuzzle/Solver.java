@@ -26,7 +26,10 @@ public class Solver implements Iterable<Board> {
     }
 
     /**
-     *	Checks to see if a Board is solvable from the given state.
+     *	Checks to see if a Board is solvable from the initial state.
+     *
+     *  @return True if the Board is solvable from the initial state,
+     *          False if not.
      */
     private boolean isSolvable() {
         if(this.m_BoardList.get(0).m_order % 2 != 0) {
@@ -64,6 +67,8 @@ public class Solver implements Iterable<Board> {
 
     /**
      *	Calculate the minimum number of moves required to reach the Goal State.
+     *
+     *  @return ...
      */
     private int moves() {
         // YOUR CODE HERE
@@ -71,13 +76,20 @@ public class Solver implements Iterable<Board> {
     }
 
     /**
+     *  ...
      *
+     *  @return ...
      */
     public Iterable<Board> solution() {
         // YOUR CODE HERE
         return(null);
     }
 
+    /**
+     *  ...
+     *
+     *  @return ...
+     */
     public Iterator<Board> iterator() {
         return m_BoardList.iterator();
     }

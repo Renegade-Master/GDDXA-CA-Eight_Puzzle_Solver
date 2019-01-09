@@ -9,13 +9,12 @@ package AlgsAI.EightPuzzle;
 
 //import
 
-public class Board {
+class Board {
     int m_order;
-    private int[] m_tiles;
 
+    private int[] m_tiles;
     private int m_hamming;
     private int m_manhattan;
-
     private int m_invers;
     private int m_zeRow;
 
@@ -29,10 +28,10 @@ public class Board {
     Board(int N, int [][] tiles) {
         this.m_order = N;
         this.m_tiles = new int[tiles.length * tiles.length];
-        this.m_hamming = Integer.MIN_VALUE;
-        this.m_manhattan = Integer.MIN_VALUE;
-        this.m_invers = Integer.MIN_VALUE;
-        this.m_zeRow = Integer.MIN_VALUE;
+        this.m_hamming      = Integer.MIN_VALUE;
+        this.m_manhattan    = Integer.MIN_VALUE;
+        this.m_invers       = Integer.MIN_VALUE;
+        this.m_zeRow        = Integer.MIN_VALUE;
 
         int z = 0;
         for (int[] i : tiles) {
@@ -46,6 +45,8 @@ public class Board {
 
     /**
      *	Return count of out-of-place tiles.
+     *
+     *  @return  ...
      */
     int hamming() {
         this.m_hamming = 0;
@@ -70,21 +71,23 @@ public class Board {
 
     /**
      *	Return Manhattan distance to Goal State.
+     *
+     * @return  ...
      */
     int manhattan() {
         this.m_manhattan = 0;
 
-        int comp = 0;
+        int compare = 0;
         for(int i : this.m_tiles) {
-            comp++;
+            compare++;
             if(i == 0) {
                 continue;
             }
-            if(i != comp) {
+            if(i != compare) {
                 //System.out.println("Tile " + i + " is in the wrong Position.\n");
-                /*System.out.println("\tAdding " + this.manhattanDist(comp,i)
+                /*System.out.println("\tAdding " + this.manhattanDist(compare,i)
                         + " to Board Manhattan score.");*/
-                this.m_manhattan += this.manhattanDist(comp,i);
+                this.m_manhattan += this.manhattanDist(compare,i);
             }
             else {
                 //System.out.println("Tile " + i + " is in the correct Position.");
@@ -98,11 +101,13 @@ public class Board {
      *	Compares this Board to another Board to check for equality.
      *
      *	@param	o	- A Board to check against this Board.
+     *
+     *  @return  ...
      */
     public boolean equals(Board o) {
         boolean valid = true;
 
-        for (int i = 0; i < m_tiles.length; i++) {
+        for (int i = 0; i < this.m_tiles.length; i++) {
             if(this.m_tiles[i] != o.m_tiles[i]) {
                 valid = false;
             }
@@ -113,6 +118,8 @@ public class Board {
 
     /**
      *	Return iterable of neighbouring Boards.
+     *
+     *  @return  ...
      */
     public Iterable<Board> neighbours() {
         // YOUR CODE HERE
@@ -121,6 +128,8 @@ public class Board {
 
     /**
      *	Return Board String representation.
+     *
+     *  @return  ...
      */
     @Override
     public String toString() {
@@ -142,6 +151,8 @@ public class Board {
 
     /**
      *	Return the number of Inversions of the Board.
+     *
+     *  @return  ...
      */
     int inversions() {
         if(this.m_invers == Integer.MIN_VALUE) {
