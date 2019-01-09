@@ -10,8 +10,12 @@ package AlgsAI.EightPuzzle;
 //import
 
 public class Board {
-    private int m_order;
-    int[] m_tiles;
+    int m_order;
+    private int[] m_tiles;
+
+    private int m_hamming;
+    private int m_manhattan;
+
     private int m_invers;
     private int m_zeRow;
 
@@ -30,6 +34,8 @@ public class Board {
     Board(int N, int [][] tiles) {
         this.m_order = N;
         this.m_tiles = new int[tiles.length * tiles.length];
+        this.m_hamming = Integer.MIN_VALUE;
+        this.m_manhattan = Integer.MIN_VALUE;
         this.m_invers = Integer.MIN_VALUE;
         this.m_zeRow = Integer.MIN_VALUE;
 
@@ -44,19 +50,53 @@ public class Board {
     }
 
     /**
-     *	@desc	Return count of out-of-place blocks.
+     *	@desc	Return count of out-of-place tiles.
      */
     public int hamming() {
-        // YOUR CODE HERE
-        return(Integer.MIN_VALUE);
+        this.m_hamming = 0;
+
+        int comp = 0;
+        for(int i : this.m_tiles) {
+            comp++;
+            if(i == 0) {
+                continue;
+            }
+            if(i != comp) {
+                this.m_hamming++;
+                //System.out.println("Tile " + i + " is in the wrong Position.");
+            }
+            else {
+                //System.out.println("Tile " + i + " is in the correct Position.");
+            }
+        }
+
+        return(this.m_hamming);
     }
 
     /**
      *	@desc	Return Manhattan distance to Goal State.
      */
     public int manhattan() {
-        // YOUR CODE HERE
-        return(Integer.MIN_VALUE);
+        this.m_manhattan = 0;
+
+        int comp = 0;
+        for(int i : this.m_tiles) {
+            comp++;
+            if(i == 0) {
+                continue;
+            }
+            if(i != comp) {
+                //System.out.println("Tile " + i + " is in the wrong Position.\n");
+                System.out.println("\tAdding " + this.manhattanDist(comp,i)
+                        + " to Board Manhattan score.");
+                this.m_manhattan += this.manhattanDist(comp,i);
+            }
+            else {
+                //System.out.println("Tile " + i + " is in the correct Position.");
+            }
+        }
+
+        return(this.m_manhattan);
     }
 
     /**
@@ -86,12 +126,18 @@ public class Board {
     /**
      *	@desc	Return Board String representation.
      */
+    @Override
     public String toString() {StringBuffer temp = new StringBuffer();
         for (int i = 0; i < this.m_tiles.length;) {
             for (int j = 0; j < this.m_order; j++) {
-                temp.append(this.m_tiles[i++] + "\t");
+                temp.append(this.m_tiles[i++]).append("\t");
             }
             temp.append("\n");
+        }
+        temp.append("\n");
+
+        for (int i : this.m_tiles) {
+            temp.append("[").append(i).append("] ");
         }
 
         return(temp.toString());
@@ -138,5 +184,21 @@ public class Board {
         }
 
         return(this.m_zeRow + 1);
+    }
+
+    /**
+     *	@desc	Return the Manhattan distance this tile is away from where it
+     *          should be.
+     */
+    private int manhattanDist(double position, double tile) {
+        double col = tile % this.m_order;
+        if(col == 0) {
+            col = this.m_order;
+        }
+        double row = Math.ceil(tile / this.m_order);
+
+
+
+        return(Integer.MIN_VALUE);
     }
 }

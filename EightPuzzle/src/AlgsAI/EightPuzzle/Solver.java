@@ -7,12 +7,13 @@
 
 package AlgsAI.EightPuzzle;
 
-import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Iterator;
 import edu.princeton.cs.algs4.In;
 
 
-public class Solver {
-    private Board m_Board;
+public class Solver implements Iterable<Board> {
+    private ArrayList<Board> m_BoardList;
 
     /**
      *	@desc	Object Constructor
@@ -22,18 +23,17 @@ public class Solver {
      *          solution    - Return iterable Board solutions.
      */
     public Solver(Board initial) {
-        this.m_Board = initial;
+        this.m_BoardList = new ArrayList<Board>();
+        this.m_BoardList.add(initial);
     }
 
     /**
      *	@desc   Checks to see if a Board is solvable from the given state.
      */
     public boolean isSolvable() {
-        double gridWidth = Math.sqrt(this.m_Board.m_tiles.length);
-
-        if(gridWidth % 2 != 0) {
+        if(this.m_BoardList.get(0).m_order % 2 != 0) {
             System.out.println("Grid Width is ODD");
-            if (this.m_Board.inversions() % 2 == 0) {
+            if (this.m_BoardList.get(0).inversions() % 2 == 0) {
                 System.out.println("\tNumber of inversions is EVEN");
                 return(true);
             } else {
@@ -42,9 +42,9 @@ public class Solver {
             }
         } else {
             System.out.println("Grid Width is EVEN");
-            if (this.m_Board.zeroRow() % 2 != 0) {
+            if (this.m_BoardList.get(0).zeroRow() % 2 != 0) {
                 System.out.println("\tBlank is on ODD bottom row");
-                if (this.m_Board.inversions() % 2 == 0) {
+                if (this.m_BoardList.get(0).inversions() % 2 == 0) {
                     System.out.println("\t\tNumber of inversions is EVEN");
                     return(true);
                 } else {
@@ -53,7 +53,7 @@ public class Solver {
                 }
             } else {
                 System.out.println("\tBlank is on EVEN bottom row");
-                if (this.m_Board.inversions() % 2 != 0) {
+                if (this.m_BoardList.get(0).inversions() % 2 != 0) {
                     System.out.println("\t\tNumber of inversions is ODD");
                     return(true);
                 } else {
@@ -78,6 +78,10 @@ public class Solver {
     public Iterable<Board> solution() {
         // YOUR CODE HERE
         return(null);
+    }
+
+    public Iterator<Board> iterator() {
+        return m_BoardList.iterator();
     }
 
     /**
@@ -118,20 +122,23 @@ public class Solver {
         }
 
         Board initial = new Board(N, tiles);
-        System.out.println("Template:\n" + initial.toString());
+        System.out.println("Template:\n" + initial.toString() + "\n");
 
         Solver solver = new Solver(initial);
 
-        /*  -- Commented out for testing
-        for (Board board : solver.solution()) {
-            System.out.println(board);
-        }
-*/        if(!solver.isSolvable()) {
+        //  -- Commented out for testing
+        /*for (Board board : solver.solution()) {
+            System.out.println(board.toString());
+        }*/
+        if(!solver.isSolvable()) {
             System.out.println("\nNo solution possible");
         }
         else {
             System.out.println("\nSolution possible");
             System.out.println("Minimum number of moves = " + solver.moves());
+
+            System.out.println("Initial Hamming Score: " + initial.hamming());
+            System.out.println("Initial Manhattan Score: " + initial.manhattan());
         }
     }
 }
