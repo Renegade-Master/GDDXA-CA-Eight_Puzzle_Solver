@@ -16,21 +16,19 @@ public class Solver implements Iterable<Board> {
     private ArrayList<Board> m_BoardList;
 
     /**
-     *	@desc	Object Constructor
+     *	Object Constructor
+     *
      *	@param	initial	- A Board object arranged in its initial configuration.
-     *	@funct	isSolvable  - Return Boolean Solvable status.
-     *          moves       - Return min number of moves to get to Goal State.
-     *          solution    - Return iterable Board solutions.
      */
-    public Solver(Board initial) {
+    private Solver(Board initial) {
         this.m_BoardList = new ArrayList<Board>();
         this.m_BoardList.add(initial);
     }
 
     /**
-     *	@desc   Checks to see if a Board is solvable from the given state.
+     *	Checks to see if a Board is solvable from the given state.
      */
-    public boolean isSolvable() {
+    private boolean isSolvable() {
         if(this.m_BoardList.get(0).m_order % 2 != 0) {
             System.out.println("Grid Width is ODD");
             if (this.m_BoardList.get(0).inversions() % 2 == 0) {
@@ -65,15 +63,15 @@ public class Solver implements Iterable<Board> {
     }
 
     /**
-     *	@desc	...
+     *	Calculate the minimum number of moves required to reach the Goal State.
      */
-    public int moves() {
+    private int moves() {
         // YOUR CODE HERE
         return(Integer.MIN_VALUE);
     }
 
     /**
-     *	@desc	...
+     *
      */
     public Iterable<Board> solution() {
         // YOUR CODE HERE
@@ -85,11 +83,13 @@ public class Solver implements Iterable<Board> {
     }
 
     /**
-     *	@desc	...
-     *	@param	args	- Command Line arguments to the program.
+     *  Main method called when program is run.
+     *
+     *	@param	args	- Command Line arguments to the program.  Should be a
+     *                 	  filename from the '.\Puzzles\' directory.
      */
     public static void main(String [] args) {
-        String filename = null;
+        String filename;
         In in = new In();
 
         try {

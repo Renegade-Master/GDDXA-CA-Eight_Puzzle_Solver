@@ -20,16 +20,11 @@ public class Board {
     private int m_zeRow;
 
     /**
-     *	@desc	Board Object Constructor
+     *	Board Object Constructor.
+     *
+     *	@param	N	    - Order of the Puzzle.
      *	@param	tiles	- Two-Dimensional Array of Int values that holds the
      *                 	  default configuration of the Board.
-     *	@funct	hamming     - Return count of out-of-place blocks.
-     *          manhattan   - Return Manhattan distance to Goal State.
-     *          equals      - Return Boolean for Board equality check.
-     *          neighbours  - Return iterable of neighbouring Boards.
-     *          toString    - Return Board String representation.
-     *          inversions  - Return the number of Inversions of the Board.
-     *          zeroRow     - Return the Board row containing a 0.
      */
     Board(int N, int [][] tiles) {
         this.m_order = N;
@@ -50,9 +45,9 @@ public class Board {
     }
 
     /**
-     *	@desc	Return count of out-of-place tiles.
+     *	Return count of out-of-place tiles.
      */
-    public int hamming() {
+    int hamming() {
         this.m_hamming = 0;
 
         int comp = 0;
@@ -74,9 +69,9 @@ public class Board {
     }
 
     /**
-     *	@desc	Return Manhattan distance to Goal State.
+     *	Return Manhattan distance to Goal State.
      */
-    public int manhattan() {
+    int manhattan() {
         this.m_manhattan = 0;
 
         int comp = 0;
@@ -100,7 +95,8 @@ public class Board {
     }
 
     /**
-     *	@desc	Compares this Board to another Board to check for equality.
+     *	Compares this Board to another Board to check for equality.
+     *
      *	@param	o	- A Board to check against this Board.
      */
     public boolean equals(Board o) {
@@ -116,7 +112,7 @@ public class Board {
     }
 
     /**
-     *	@desc	Return iterable of neighbouring Boards.
+     *	Return iterable of neighbouring Boards.
      */
     public Iterable<Board> neighbours() {
         // YOUR CODE HERE
@@ -124,10 +120,11 @@ public class Board {
     }
 
     /**
-     *	@desc	Return Board String representation.
+     *	Return Board String representation.
      */
     @Override
-    public String toString() {StringBuffer temp = new StringBuffer();
+    public String toString() {
+        StringBuilder temp = new StringBuilder();
         for (int i = 0; i < this.m_tiles.length;) {
             for (int j = 0; j < this.m_order; j++) {
                 temp.append(this.m_tiles[i++]).append("\t");
@@ -144,9 +141,9 @@ public class Board {
     }
 
     /**
-     *	@desc	Return the number of Inversions of the Board.
+     *	Return the number of Inversions of the Board.
      */
-    public int inversions() {
+    int inversions() {
         if(this.m_invers == Integer.MIN_VALUE) {
             this.m_invers = 0;
             for (int i = 0; i < this.m_tiles.length; i++) {
@@ -168,9 +165,11 @@ public class Board {
     }
 
     /**
-     *	@desc	Return the Board row containing a '0'.
+     *	Return the Board row containing a '0'.
+     *
+     *  @return The row of the Board containing the '0' tile.
      */
-    public int zeroRow() {
+    int zeroRow() {
         if(this.m_zeRow == Integer.MIN_VALUE) {
             this.m_zeRow = 0;
             for (int i = this.m_tiles.length - 1; i > 0; i--) {
@@ -187,8 +186,13 @@ public class Board {
     }
 
     /**
-     *	@desc	Return the Manhattan distance this tile is away from where it
-     *          should be.
+     *	Returns the Manhattan distance this tile is away from where it
+     *  should be.
+     *
+     *	@param	position    - Current tile position.
+     *	@param  tile        - Value on the current tile space.
+     *
+     *  @return  The minimum number of moves required to reach the Goal tile.
      */
     private int manhattanDist(double position, double tile) {
         // Where is it?
