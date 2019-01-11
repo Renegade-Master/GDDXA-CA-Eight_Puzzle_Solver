@@ -9,10 +9,13 @@ package AlgsAI.EightPuzzle;
 
 //import
 
+import java.util.PriorityQueue;
+
 class Board implements Comparable<Board>{
     int m_order;
 
     private int[] m_tiles;
+    private PriorityQueue<Board> m_neighbours;
     private int m_hamming;
     private int m_manhattan;
     private int m_invers;
@@ -28,6 +31,7 @@ class Board implements Comparable<Board>{
     Board(int N, int [][] tiles) {
         this.m_order = N;
         this.m_tiles = new int[tiles.length * tiles.length];
+        this.m_neighbours = new PriorityQueue<Board>();
         this.m_hamming      = Integer.MIN_VALUE;
         this.m_manhattan    = Integer.MIN_VALUE;
         this.m_invers       = Integer.MIN_VALUE;
@@ -137,7 +141,7 @@ class Board implements Comparable<Board>{
      */
     public Iterable<Board> neighbours() {
         // YOUR CODE HERE
-        return(null);
+        return(this.m_neighbours);
     }
 
     /**
