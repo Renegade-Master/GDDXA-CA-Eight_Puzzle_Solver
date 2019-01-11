@@ -9,7 +9,7 @@ package AlgsAI.EightPuzzle;
 
 //import
 
-class Board {
+class Board implements Comparable<Board>{
     int m_order;
 
     private int[] m_tiles;
@@ -117,6 +117,20 @@ class Board {
     }
 
     /**
+     *	Compares this Board to another Board to check for Priority.
+     *
+     *	@param	o	- A Board to check against this Board.
+     *
+     *  @return  ...
+     */
+    @Override
+    public int compareTo(Board o) {
+        //return(Integer.compare(this.m_hamming,o.m_hamming));
+
+        return(Integer.compare(this.m_manhattan,o.m_manhattan));
+    }
+
+    /**
      *	Return iterable of neighbouring Boards.
      *
      *  @return  ...
@@ -134,20 +148,26 @@ class Board {
     @Override
     public String toString() {
         StringBuilder temp = new StringBuilder();
+        temp.append("Board:\n");
         for (int i = 0; i < this.m_tiles.length;) {
             for (int j = 0; j < this.m_order; j++) {
                 temp.append(this.m_tiles[i++]).append("\t");
             }
             temp.append("\n");
         }
-        temp.append("\n");
+        //temp.append("\n");
 
+        temp.append("\nArray:\n");
         for (int i : this.m_tiles) {
             temp.append("[").append(i).append("] ");
         }
 
-        return(temp.toString());
+        return(temp.append("\n").toString());
     }
+
+    /***-------------***\
+    |   Extra Methods   |
+    \***-------------***/
 
     /**
      *	Return the number of Inversions of the Board.

@@ -7,13 +7,13 @@
 
 package AlgsAI.EightPuzzle;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import edu.princeton.cs.algs4.In;
 
+import java.util.PriorityQueue;
 
-public class Solver implements Iterable<Board> {
-    private ArrayList<Board> m_BoardList;
+
+public class Solver {
+    private PriorityQueue<Board> m_BoardQueue;
 
     /**
      *	Object Constructor
@@ -21,8 +21,8 @@ public class Solver implements Iterable<Board> {
      *	@param	initial	- A Board object arranged in its initial configuration.
      */
     private Solver(Board initial) {
-        this.m_BoardList = new ArrayList<Board>();
-        this.m_BoardList.add(initial);
+        this.m_BoardQueue = new PriorityQueue<Board>();
+        this.m_BoardQueue.add(initial);
     }
 
     /**
@@ -32,9 +32,9 @@ public class Solver implements Iterable<Board> {
      *          False if not.
      */
     private boolean isSolvable() {
-        if(this.m_BoardList.get(0).m_order % 2 != 0) {
+        if(this.m_BoardQueue.peek().m_order % 2 != 0) {
             System.out.println("Grid Width is ODD");
-            if (this.m_BoardList.get(0).inversions() % 2 == 0) {
+            if (this.m_BoardQueue.peek().inversions() % 2 == 0) {
                 System.out.println("\tNumber of inversions is EVEN");
                 return(true);
             } else {
@@ -43,9 +43,9 @@ public class Solver implements Iterable<Board> {
             }
         } else {
             System.out.println("Grid Width is EVEN");
-            if (this.m_BoardList.get(0).zeroRow() % 2 != 0) {
+            if (this.m_BoardQueue.peek().zeroRow() % 2 != 0) {
                 System.out.println("\tBlank is on ODD bottom row");
-                if (this.m_BoardList.get(0).inversions() % 2 == 0) {
+                if (this.m_BoardQueue.peek().inversions() % 2 == 0) {
                     System.out.println("\t\tNumber of inversions is EVEN");
                     return(true);
                 } else {
@@ -54,7 +54,7 @@ public class Solver implements Iterable<Board> {
                 }
             } else {
                 System.out.println("\tBlank is on EVEN bottom row");
-                if (this.m_BoardList.get(0).inversions() % 2 != 0) {
+                if (this.m_BoardQueue.peek().inversions() % 2 != 0) {
                     System.out.println("\t\tNumber of inversions is ODD");
                     return(true);
                 } else {
@@ -80,18 +80,12 @@ public class Solver implements Iterable<Board> {
      *
      *  @return ...
      */
-    public Iterable<Board> solution() {
-        // YOUR CODE HERE
-        return(null);
-    }
-
-    /**
-     *  ...
-     *
-     *  @return ...
-     */
-    public Iterator<Board> iterator() {
-        return m_BoardList.iterator();
+    private Iterable<Board> solution() {
+        /*
+        Apparently simply returning a reference to the list of Boards is
+        enough.
+        */
+        return(this.m_BoardQueue);
     }
 
     /**
@@ -138,10 +132,9 @@ public class Solver implements Iterable<Board> {
 
         Solver solver = new Solver(initial);
 
-        //  -- Commented out for testing
-        /*for (Board board : solver.solution()) {
+        for (Board board : solver.solution()) {
             System.out.println(board.toString());
-        }*/
+        }
         if(!solver.isSolvable()) {
             System.out.println("\nNo solution possible");
         }
