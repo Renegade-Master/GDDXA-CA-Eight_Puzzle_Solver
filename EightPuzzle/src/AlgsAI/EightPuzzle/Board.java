@@ -11,7 +11,7 @@ package AlgsAI.EightPuzzle;
 
 import java.util.PriorityQueue;
 
-class Board implements Comparable<Board>{
+class Board implements Comparable<Board> {
     enum SCORING { MANHATTAN, HAMMING }
     SCORING m_Scoring = SCORING.HAMMING;
 
