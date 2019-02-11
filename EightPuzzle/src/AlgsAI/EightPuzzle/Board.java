@@ -12,6 +12,9 @@ package AlgsAI.EightPuzzle;
 import java.util.PriorityQueue;
 
 class Board implements Comparable<Board>{
+    enum SCORING { MANHATTAN, HAMMING }
+    SCORING m_Scoring = SCORING.HAMMING;
+
     int m_order;
 
     private int[] m_tiles;
@@ -109,15 +112,13 @@ class Board implements Comparable<Board>{
      *  @return  ...
      */
     public boolean equals(Board o) {
-        boolean valid = true;
-
         for (int i = 0; i < this.m_tiles.length; i++) {
             if(this.m_tiles[i] != o.m_tiles[i]) {
-                valid = false;
+                return(false);
             }
         }
 
-        return(valid);
+        return(true);
     }
 
     /**
@@ -129,18 +130,27 @@ class Board implements Comparable<Board>{
      */
     @Override
     public int compareTo(Board o) {
-        //return(Integer.compare(this.m_hamming,o.m_hamming));
-
-        return(Integer.compare(this.m_manhattan,o.m_manhattan));
+        switch(this.m_Scoring) {
+            case HAMMING:
+                return (Integer.compare(this.m_hamming, o.m_hamming));
+            case MANHATTAN:
+                return (Integer.compare(this.m_manhattan, o.m_manhattan));
+            default:
+                return(Integer.MIN_VALUE);
+        }
     }
 
     /**
-     *	Return iterable of neighbouring Boards.
+     *	Return iterable of neighbouring Boards.  Use this to expand the
+     *  child Boards of this Board.  VERY IMPORTANT
      *
      *  @return  ...
      */
     public Iterable<Board> neighbours() {
-        // YOUR CODE HERE
+        this.m_neighbours.clear();
+
+        // Look at this Board.  Expand Child Boards.
+
         return(this.m_neighbours);
     }
 

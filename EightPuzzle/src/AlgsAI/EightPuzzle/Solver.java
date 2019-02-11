@@ -135,6 +135,7 @@ public class Solver {
         for (Board board : solver.solution()) {
             System.out.println(board.toString());
         }
+
         if(!solver.isSolvable()) {
             System.out.println("\nNo solution possible");
         }
@@ -142,7 +143,10 @@ public class Solver {
             System.out.println("\nSolution possible");
             System.out.println("Minimum number of moves = " + solver.moves());
 
+            initial.m_Scoring = Board.SCORING.HAMMING;
             System.out.println("Initial Hamming Score: " + initial.hamming());
+
+            initial.m_Scoring = Board.SCORING.MANHATTAN;
             System.out.println("Initial Manhattan Score: " + initial.manhattan());
         }
     }
