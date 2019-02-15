@@ -1,5 +1,5 @@
 language: java
 jdk: oraclejdk8
 script:
-  - javac -classpath "EightPuzzle\utils\algs4.jar" "EightPuzzle\src\AlgsAI\EightPuzzle\Board.java" -d "EightPuzzle\out\production\EightPuzzle"
-  - javac -classpath "EightPuzzle\out\production\EightPuzzle;EightPuzzle\utils\algs4.jar" "EightPuzzle\src\AlgsAI\EightPuzzle\Solver.java" -d "EightPuzzle\out\production\EightPuzzle\AlgsAI\EightPuzzle"
+  - javac -d "EightPuzzle\out\production\EightPuzzle" -classpath "EightPuzzle\utils\algs4.jar"  "EightPuzzle\src\AlgsAI\EightPuzzle\Board.java"
+  - javac -d "EightPuzzle\out\production\EightPuzzle\AlgsAI\EightPuzzle" -classpath "EightPuzzle\out\production\EightPuzzle;EightPuzzle\utils\algs4.jar" "EightPuzzle\src\AlgsAI\EightPuzzle\Solver.java" 
