@@ -3,4 +3,4 @@ jdk: oraclejdk8
 script:
   - javac -classpath "EightPuzzle\out\production\EightPuzzle;EightPuzzle\utils\algs4.jar" "EightPuzzle\src\AlgsAI\EightPuzzle\Solver.java"
   - java -classpath "EightPuzzle\out\production\EightPuzzle;EightPuzzle\utils\algs4.jar" "AlgsAI.EightPuzzle.Solver"
-  - ls
+  - tree EightPuzzle
