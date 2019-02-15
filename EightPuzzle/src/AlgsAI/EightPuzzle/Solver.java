@@ -22,7 +22,7 @@ public class Solver {
      */
     private Solver(Board initial) {
         this.m_BoardQueue = new PriorityQueue<Board>();
-        this.m_BoardQueue.add(initial);
+        this.m_BoardQueue.offer(initial);
     }
 
     /**
@@ -85,6 +85,12 @@ public class Solver {
         Apparently simply returning a reference to the list of Boards is
         enough.
         */
+
+        // Potential Boards
+        for(Board board: this.m_BoardQueue.peek().neighbours()) {
+            board.toString();
+        }
+
         return(this.m_BoardQueue);
     }
 
