@@ -1,7 +1,7 @@
 language: java
 jdk: oraclejdk8
 script:
-  - mkdir "\\home\\travis\\build\\LitThurles-K00221230\\3Y_AlgAI_Assignment_02\\EightPuzzle\\out\\production\\EightPuzzle\\AlgsAI\\EightPuzzle"
+  - mkdir "\\home\\travis\\build\\LitThurles-K00221230\\3Y_AlgAI_Assignment_02\\EightPuzzle\\out\\production\\EightPuzzle\\AlgsAI\\EightPuzzle\\AlgsAI\\EightPuzzle"
 #  - mkdir "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/src/AlgsAI/EightPuzzle"
   - javac -d "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/out/production/EightPuzzle/AlgsAI/EightPuzzle" -classpath "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/utils/algs4.jar" "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/src/AlgsAI/EightPuzzle/Board.java"
   - javac -d "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/out/production/EightPuzzle/AlgsAI/EightPuzzle" -classpath "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/utils/algs4.jar;/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/out/production/EightPuzzle/AlgsAI/EightPuzzle" "/home/travis/build/LitThurles-K00221230/3Y_AlgAI_Assignment_02/EightPuzzle/src/AlgsAI/EightPuzzle/Solver.java"
