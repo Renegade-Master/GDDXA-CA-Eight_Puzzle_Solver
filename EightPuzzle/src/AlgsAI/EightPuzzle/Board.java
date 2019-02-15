@@ -15,14 +15,15 @@ class Board implements Comparable<Board> {
     enum SCORING { MANHATTAN, HAMMING }
     SCORING m_Scoring = SCORING.HAMMING;
 
-    int m_order;
+    int m_order = Integer.MIN_VALUE;
 
     private int[] m_tiles;
     private PriorityQueue<Board> m_neighbours;
-    private int m_hamming;
-    private int m_manhattan;
-    private int m_invers;
-    private int m_zeRow;
+
+    private int m_hamming = Integer.MIN_VALUE;
+    private int m_manhattan = Integer.MIN_VALUE;
+    private int m_invers = Integer.MIN_VALUE;
+    private int m_zeRow = Integer.MIN_VALUE;
 
     /**
      *	Board Object Constructor.
@@ -35,10 +36,10 @@ class Board implements Comparable<Board> {
         this.m_order = N;
         this.m_tiles = new int[tiles.length * tiles.length];
         this.m_neighbours = new PriorityQueue<Board>();
-        this.m_hamming      = Integer.MIN_VALUE;
-        this.m_manhattan    = Integer.MIN_VALUE;
-        this.m_invers       = Integer.MIN_VALUE;
-        this.m_zeRow        = Integer.MIN_VALUE;
+        this.m_hamming      = this.hamming();
+        this.m_manhattan    = this.manhattan();
+        this.m_invers       = this.inversions();
+        this.m_zeRow        = this.zeroRow();
 
         int z = 0;
         for (int[] i : tiles) {
@@ -149,6 +150,31 @@ class Board implements Comparable<Board> {
     public Iterable<Board> neighbours() {
         this.m_neighbours.clear();
 
+        int possibleBoards = 4;
+
+        //  Is the Blank on the Top Row?
+        if(this.m_zeRow == this.m_order){
+            possibleBoards--;
+            // Do something
+        }
+        //  Is the Blank on the Bottom Row?
+        else if(this.m_zeRow == 1){
+            possibleBoards--;
+            // Do something
+        }
+
+        //  Is the Blank on the Leftmost Column?
+        if(1 == 2){
+            // Do something
+        }
+        //  Is the Blank on the Rightmost Column?
+        else if(1 == 2){
+            // Do something
+        }
+
+        // The Blank is in a Safe Area
+
+
         // Look at this Board.  Expand Child Boards.
 
         return(this.m_neighbours);
@@ -227,7 +253,7 @@ class Board implements Comparable<Board> {
         //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
         }
 
-        return(this.m_zeRow + 1);
+        return(this.m_zeRow);
     }
 
     /**
@@ -240,7 +266,7 @@ class Board implements Comparable<Board> {
      *  @return  The minimum number of moves required to reach the Goal tile.
      */
     private int manhattanDist(double position, double tile) {
-        // Where is it?
+        // Where is the Tile?
         double oldCol = position % this.m_order;
         if(oldCol == 0) {
             oldCol = this.m_order;
