@@ -9,6 +9,7 @@ package AlgsAI.EightPuzzle;
 
 //import
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 class Board implements Comparable<Board> {
@@ -42,9 +43,30 @@ class Board implements Comparable<Board> {
         for (int[] i : tiles) {
             for (int j : i) {
                 this.m_tiles[z++] = j;
-                //System.out.print(m_tiles[z - 1] + "\t");
             }
-            //System.out.println();
+        }
+
+        this.m_hamming      = this.hamming();
+        this.m_manhattan    = this.manhattan();
+        this.m_invers       = this.inversions();
+        this.m_zeRow        = this.zeroRow();
+    }
+
+    /**
+     *	Board Object Constructor.
+     *
+     *	@param	N	    - Order of the Puzzle.
+     *	@param	tiles	- Two-Dimensional Array of Int values that holds the
+     *                 	  default configuration of the Board.
+     */
+    Board(int N, int [] tiles) {
+        this.m_order = N;
+        this.m_tiles = new int[tiles.length * tiles.length];
+        this.m_neighbours = new PriorityQueue<Board>();
+
+        int z = 0;
+        for (int i : tiles) {
+            this.m_tiles[z++] = i;
         }
 
         this.m_hamming      = this.hamming();
@@ -154,6 +176,11 @@ class Board implements Comparable<Board> {
 
         int possibleBoards = 4;
 
+        // Handle Edge Cases
+        if(this.m_zeroTile == 0) {
+
+        }
+
         //  Is the Blank on the Top Row?
         if(this.m_zeRow == this.m_order){
             possibleBoards--;
@@ -168,16 +195,26 @@ class Board implements Comparable<Board> {
             possibleBoards--;
         }
         //  Is the Blank on the Rightmost Column?
-        else if((this.m_order % this.m_zeroTile) == (this.m_order)) {
+        else if((this.m_order % this.m_zeroTile) == (this.m_order + 1)) {
             possibleBoards--;
         }
 
         System.out.println("Boards Possible:\t" + possibleBoards);
 
         // Look at this Board.  Expand Child Boards.
+        int[] copy = null;
         for(int i = 0; i < possibleBoards; i++) {
+            //Copy the current Tiles
+            copy = this.m_tiles;
 
-            // Make a new Board!!
+            // Apply changes to the Tiles
+
+
+            // Make a Board with the new Tiles
+            Board temp = new Board(this.m_order, copy);
+
+            // Add it to the Queue
+            m_neighbours.offer(temp);
 
         }
 
@@ -247,7 +284,7 @@ class Board implements Comparable<Board> {
     int zeroRow() {
         if(this.m_zeRow == Integer.MIN_VALUE) {
             this.m_zeRow = 0;
-            for (int i = this.m_tiles.length - 1; i > 0; i--) {
+            for (int i = this.m_tiles.length - 1; i >= 0; i--) {
                 //this.m_zeRow++;
                 if (this.m_tiles[i] == 0) {
                     this.m_zeroTile = i;

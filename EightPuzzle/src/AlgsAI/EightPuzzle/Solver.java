@@ -67,11 +67,18 @@ public class Solver {
 
     /**
      *	Calculate the minimum number of moves required to reach the Goal State.
+     *  Majority of Program compute here.
      *
-     *  @return ...
+     *  @return The number of moves required to reach the Goal State.
      */
     private int moves() {
-        // YOUR CODE HERE
+        // Stay in this function until Solution is found
+
+        // Potential Boards
+        for(Board board : this.m_BoardQueue.peek().neighbours()) {
+            board.toString();
+        }
+
         return(Integer.MIN_VALUE);
     }
 
@@ -85,11 +92,6 @@ public class Solver {
         Apparently simply returning a reference to the list of Boards is
         enough.
         */
-
-        // Potential Boards
-        for(Board board: this.m_BoardQueue.peek().neighbours()) {
-            board.toString();
-        }
 
         return(this.m_BoardQueue);
     }
@@ -139,7 +141,7 @@ public class Solver {
         Solver solver = new Solver(initial);
 
         for (Board board : solver.solution()) {
-            System.out.println(board.toString());
+            //System.out.println(board.toString());
         }
 
         if(!solver.isSolvable()) {
