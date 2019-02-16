@@ -223,10 +223,7 @@ class Board implements Comparable<Board> {
         System.out.println("Boards Possible:\t" + possibleBoards);
 
         // Look at this Board.  Expand Child Boards.
-        //final Board refBoard = new Board(this.m_order, this.m_tiles);
         int[][] newBoards = new int[possibleBoards][this.m_tiles.length];
-        //int[] newTiles = this.m_tiles;
-        int oldValue = 0;
         int newValueIndex = 0;
 
         for(int i = 0; i < possibleBoards; i++) {
@@ -253,15 +250,15 @@ class Board implements Comparable<Board> {
             }
 
             // Apply changes to the Tiles
-            oldValue = this.m_tiles[newValueIndex];
+            int oldValue = this.m_tiles[newValueIndex];
             newBoard.m_tiles[this.m_zeroTile] = oldValue;
             newBoard.m_tiles[newValueIndex] = 0;
 
             newBoards[i] = newBoard.m_tiles;
         }
 
+        // Add new Boards to the Queue
         for(int[] tiles : newBoards) {
-            // Add new Boards to the Queue
             this.m_neighbours.offer(makeNewBoard(tiles));
         }
 

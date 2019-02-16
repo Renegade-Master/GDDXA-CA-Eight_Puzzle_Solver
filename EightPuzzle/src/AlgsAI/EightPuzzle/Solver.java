@@ -74,19 +74,23 @@ public class Solver {
      *  @return The number of m_moves required to reach the Goal State.
      */
     private int moves() {
+        Board nextBoard = this.m_BoardQueue.peek();
+
         // Stay in this function until Solution is found
-        /*while (this.m_BoardQueue.peek().inversions() != 0) {*/
+        while (nextBoard.inversions() != 0) {
             // Potential Boards
-            System.out.println("\nPotential Moves:");
+            /*System.out.println("\nPotential Moves:");
             for (Board board : this.m_BoardQueue.peek().neighbours()) {
                 System.out.println("---");
                 System.out.println(board.toString());
                 System.out.println("Manhattan:\t" + board.manhattan());
                 System.out.println("Hamming:\t" + board.hamming());
-            }
+            }*/
+            //this.m_BoardQueue.offer(this.m_BoardQueue.peek().neighbours());
+            nextBoard = this.m_BoardQueue.peek().neighbours();
 
             this.m_moves++;
-       /* }*/
+        }
 
         return(this.m_moves);
     }
