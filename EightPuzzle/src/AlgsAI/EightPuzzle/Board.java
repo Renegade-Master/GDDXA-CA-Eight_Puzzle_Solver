@@ -15,8 +15,7 @@ class Board implements Comparable<Board> {
 
     int m_order = Integer.MIN_VALUE;
 
-    private int[] m_tiles;
-    private int[] m_backup;
+    private final int[] m_tiles;
     private PriorityQueue<Board> m_neighbours;
 
     private int m_hamming = Integer.MIN_VALUE;
@@ -43,8 +42,6 @@ class Board implements Comparable<Board> {
                 this.m_tiles[z++] = j;
             }
         }
-        final int[] backup = m_tiles;
-        m_backup = backup;
 
         this.m_hamming      = this.hamming();
         this.m_manhattan    = this.manhattan();
@@ -68,8 +65,6 @@ class Board implements Comparable<Board> {
         for (int i : tiles) {
             this.m_tiles[z++] = i;
         }
-        final int[] backup = m_tiles;
-        m_backup = backup;
 
         this.m_hamming      = this.hamming();
         this.m_manhattan    = this.manhattan();
@@ -227,42 +222,45 @@ class Board implements Comparable<Board> {
         System.out.println("Boards Possible:\t" + possibleBoards);
 
         // Look at this Board.  Expand Child Boards.
-        int[] copy = null;
-        int swap = 0;
-        int target = 0;
+        final Board refBoard = new Board(this.m_order, this.m_tiles);
+        int[][] newBoards = new int[possibleBoards][refBoard.m_tiles.length];
+        int[] newTiles = new int[refBoard.m_tiles.length];
+        int oldValue = 0;
+        int newValueIndex = 0;
 
         for(int i = 0; i < possibleBoards; i++) {
             //Copy the current Tiles
-            copy = m_backup;
+            newTiles = refBoard.m_tiles;
 
             // Decide which Tile to Switch
             if(leftSafe) {
-                target = this.m_zeroTile - 1;
+                newValueIndex = refBoard.m_zeroTile - 1;
                 leftSafe = false;
             }
             else if(rightSafe) {
-                target = this.m_zeroTile + 1;
+                newValueIndex = refBoard.m_zeroTile + 1;
                 rightSafe = false;
             }
             else if(downSafe) {
-                target = this.m_zeroTile + this.m_order;
+                newValueIndex = refBoard.m_zeroTile + refBoard.m_order;
                 downSafe = false;
             }
             else if(upSafe) {
-                target = this.m_zeroTile - this.m_order;
+                newValueIndex = refBoard.m_zeroTile - refBoard.m_order;
                 upSafe = false;
             }
 
             // Apply changes to the Tiles
-            swap = copy[this.m_zeroTile];
-            copy[this.m_zeroTile] = copy[target];
-            copy[target] = swap;
+            oldValue = newTiles[refBoard.m_zeroTile];
+            newTiles[refBoard.m_zeroTile] = newTiles[newValueIndex];
+            newTiles[newValueIndex] = oldValue;
 
-            // Make a Board with the new Tiles
-            Board temp = new Board(this.m_order, copy);
+            newBoards[i] = newTiles;
+        }
 
-            // Add it to the Queue
-            m_neighbours.offer(temp);
+        for(int[] tiles : newBoards) {
+            // Add new Boards to the Queue
+            this.m_neighbours.offer(makeNewBoard(tiles));
         }
 
         return(this.m_neighbours);
@@ -375,5 +373,45 @@ class Board implements Comparable<Board> {
         double rowDiff = Math.abs(newRow - oldRow);
 
         return((int)(colDiff + rowDiff));
+    }
+
+    /**
+     * Returns a new Board
+     *
+     * @param   tiles       - The Tileset for the new Board.
+     *
+     * @return  A new Board
+     */
+    private Board makeNewBoard(int[] tiles) {
+        Board newBoard = new Board(this.m_order, tiles);
+
+        return(newBoard);
+    }
+
+    /**
+     * Retrieve a Tile from the Initial Board
+     *
+     * @param   i           - Index of Tile to retrieve
+     *
+     * @return  The requested value
+     */
+    private int getTile(int i) {
+        if(i >= 0 && i <= this.m_tiles.length) {
+            int temp = this.m_tiles[i];
+            return (temp);
+        }
+        else {
+            return(Integer.MIN_VALUE);
+        }
+    }
+
+    /**
+     * Retrieve a Tile from the Initial Board
+     *
+     * @return  The requested values
+     */
+    private int[] getTiles() {
+        int[] temp = this.m_tiles;
+        return(temp);
     }
 }
