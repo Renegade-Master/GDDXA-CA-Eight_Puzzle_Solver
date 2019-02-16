@@ -16,6 +16,7 @@ class Board implements Comparable<Board> {
     int m_order = Integer.MIN_VALUE;
 
     private int[] m_tiles;
+    private int[] m_backup;
     private PriorityQueue<Board> m_neighbours;
 
     private int m_hamming = Integer.MIN_VALUE;
@@ -42,6 +43,8 @@ class Board implements Comparable<Board> {
                 this.m_tiles[z++] = j;
             }
         }
+        final int[] backup = m_tiles;
+        m_backup = backup;
 
         this.m_hamming      = this.hamming();
         this.m_manhattan    = this.manhattan();
@@ -65,6 +68,8 @@ class Board implements Comparable<Board> {
         for (int i : tiles) {
             this.m_tiles[z++] = i;
         }
+        final int[] backup = m_tiles;
+        m_backup = backup;
 
         this.m_hamming      = this.hamming();
         this.m_manhattan    = this.manhattan();
@@ -171,34 +176,54 @@ class Board implements Comparable<Board> {
     public Iterable<Board> neighbours() {
         this.m_neighbours.clear();
 
+        // Set Default conditions
         int possibleBoards = 4;
+        boolean leftSafe = false;
+        boolean rightSafe = false;
+        boolean upSafe = false;
+        boolean downSafe = false;
 
         // Is 0 the First Tile?
         if(this.m_zeroTile == 0) {
             possibleBoards -= 2;
+            rightSafe = true;
+            downSafe = true;
         }
         // Is 0 the Last Tile?
         else if(this.m_zeroTile == (this.m_tiles.length - 1)) {
             possibleBoards -= 2;
+            leftSafe = true;
+            upSafe = true;
         }
-
-        //  Is the Blank on the Top Row?
-        else if(this.m_zeRow == this.m_order){
-            possibleBoards--;
+        else {
+            //  Is the Blank on the Top Row?
+            if(this.m_zeRow == this.m_order){
+                possibleBoards--;
+                downSafe = true;
+            }
+            //  Is the Blank on the Bottom Row?
+            else if(this.m_zeRow == 1){
+                possibleBoards--;
+                upSafe = true;
+            }
+            //  Is the Blank on the Leftmost Column?
+            else if((this.m_order % this.m_zeroTile) == 0) {
+                possibleBoards--;
+                rightSafe = true;
+            }
+            //  Is the Blank on the Rightmost Column?
+            else if((this.m_order % this.m_zeroTile) == (this.m_order + 1)) {
+                possibleBoards--;
+                leftSafe = true;
+            }
+            //  The Blank is in a very safe position
+            else {
+                leftSafe = true;
+                rightSafe = true;
+                upSafe = true;
+                downSafe = true;
+            }
         }
-        //  Is the Blank on the Bottom Row?
-        else if(this.m_zeRow == 1){
-            possibleBoards--;
-        }
-        //  Is the Blank on the Leftmost Column?
-        else if((this.m_order % this.m_zeroTile) == 0) {
-            possibleBoards--;
-        }
-        //  Is the Blank on the Rightmost Column?
-        else if((this.m_order % this.m_zeroTile) == (this.m_order + 1)) {
-            possibleBoards--;
-        }
-
         System.out.println("Boards Possible:\t" + possibleBoards);
 
         // Look at this Board.  Expand Child Boards.
@@ -206,42 +231,27 @@ class Board implements Comparable<Board> {
         int swap = 0;
         int target = 0;
 
-        for(int i = 0; i < possibleBoards;/* i++*/) {
+        for(int i = 0; i < possibleBoards; i++) {
             //Copy the current Tiles
-            copy = this.m_tiles;
+            copy = m_backup;
 
             // Decide which Tile to Switch
-            switch(i) {
-            case 0:
-                try {
-                    target = this.m_zeroTile + 1;
-                }catch (Exception e) {
-                    continue;
-                }
-                break;
-            case 1:
-                try {
-                    target = this.m_zeroTile - 1;
-                }catch (Exception e) {
-                    continue;
-                }
-                break;
-            case 2:
-                try {
-                    target = this.m_zeroTile + this.m_order;
-                }catch (Exception e) {
-                    continue;
-                }
-                break;
-            case 3:
-                try {
-                    target = this.m_zeroTile - this.m_order;
-                }catch (Exception e) {
-                    continue;
-                }
-                break;
+            if(leftSafe) {
+                target = this.m_zeroTile - 1;
+                leftSafe = false;
             }
-            i++;
+            else if(rightSafe) {
+                target = this.m_zeroTile + 1;
+                rightSafe = false;
+            }
+            else if(downSafe) {
+                target = this.m_zeroTile + this.m_order;
+                downSafe = false;
+            }
+            else if(upSafe) {
+                target = this.m_zeroTile - this.m_order;
+                upSafe = false;
+            }
 
             // Apply changes to the Tiles
             swap = copy[this.m_zeroTile];
