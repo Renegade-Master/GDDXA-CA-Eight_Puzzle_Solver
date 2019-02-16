@@ -176,22 +176,25 @@ class Board implements Comparable<Board> {
 
         int possibleBoards = 4;
 
-        // Handle Edge Cases
+        // Is 0 the First Tile?
         if(this.m_zeroTile == 0) {
-
+            possibleBoards -= 2;
+        }
+        // Is 0 the Last Tile?
+        else if(this.m_zeroTile == (this.m_tiles.length - 1)) {
+            possibleBoards -= 2;
         }
 
         //  Is the Blank on the Top Row?
-        if(this.m_zeRow == this.m_order){
+        else if(this.m_zeRow == this.m_order){
             possibleBoards--;
         }
         //  Is the Blank on the Bottom Row?
         else if(this.m_zeRow == 1){
             possibleBoards--;
         }
-
         //  Is the Blank on the Leftmost Column?
-        if((this.m_order % this.m_zeroTile) == 0) {
+        else if((this.m_order % this.m_zeroTile) == 0) {
             possibleBoards--;
         }
         //  Is the Blank on the Rightmost Column?
