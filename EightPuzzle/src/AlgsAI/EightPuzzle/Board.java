@@ -7,22 +7,22 @@
 
 package AlgsAI.EightPuzzle;
 
-//import
-
 import java.util.PriorityQueue;
 
 class Board implements Comparable<Board> {
     enum SCORING { MANHATTAN, HAMMING }
     SCORING m_Scoring = SCORING.HAMMING;
 
-    int m_order;
+    int m_order = Integer.MIN_VALUE;
 
     private int[] m_tiles;
     private PriorityQueue<Board> m_neighbours;
-    private int m_hamming;
-    private int m_manhattan;
-    private int m_invers;
-    private int m_zeRow;
+
+    private int m_hamming = Integer.MIN_VALUE;
+    private int m_manhattan = Integer.MIN_VALUE;
+    private int m_invers = Integer.MIN_VALUE;
+    private int m_zeRow = Integer.MIN_VALUE;
+    private int m_zeroTile = Integer.MIN_VALUE;
 
     /**
      *	Board Object Constructor.
@@ -35,19 +35,41 @@ class Board implements Comparable<Board> {
         this.m_order = N;
         this.m_tiles = new int[tiles.length * tiles.length];
         this.m_neighbours = new PriorityQueue<Board>();
-        this.m_hamming      = Integer.MIN_VALUE;
-        this.m_manhattan    = Integer.MIN_VALUE;
-        this.m_invers       = Integer.MIN_VALUE;
-        this.m_zeRow        = Integer.MIN_VALUE;
 
         int z = 0;
         for (int[] i : tiles) {
             for (int j : i) {
                 this.m_tiles[z++] = j;
-                //System.out.print(m_tiles[z - 1] + "\t");
             }
-            //System.out.println();
         }
+
+        this.m_hamming      = this.hamming();
+        this.m_manhattan    = this.manhattan();
+        this.m_invers       = this.inversions();
+        this.m_zeRow        = this.zeroRow();
+    }
+
+    /**
+     *	Board Object Constructor.
+     *
+     *	@param	N	    - Order of the Puzzle.
+     *	@param	tiles	- Two-Dimensional Array of Int values that holds the
+     *                 	  default configuration of the Board.
+     */
+    Board(int N, int [] tiles) {
+        this.m_order = N;
+        this.m_tiles = new int[tiles.length];
+        this.m_neighbours = new PriorityQueue<Board>();
+
+        int z = 0;
+        for (int i : tiles) {
+            this.m_tiles[z++] = i;
+        }
+
+        this.m_hamming      = this.hamming();
+        this.m_manhattan    = this.manhattan();
+        this.m_invers       = this.inversions();
+        this.m_zeRow        = this.zeroRow();
     }
 
     /**
@@ -149,7 +171,89 @@ class Board implements Comparable<Board> {
     public Iterable<Board> neighbours() {
         this.m_neighbours.clear();
 
+        int possibleBoards = 4;
+
+        // Is 0 the First Tile?
+        if(this.m_zeroTile == 0) {
+            possibleBoards -= 2;
+        }
+        // Is 0 the Last Tile?
+        else if(this.m_zeroTile == (this.m_tiles.length - 1)) {
+            possibleBoards -= 2;
+        }
+
+        //  Is the Blank on the Top Row?
+        else if(this.m_zeRow == this.m_order){
+            possibleBoards--;
+        }
+        //  Is the Blank on the Bottom Row?
+        else if(this.m_zeRow == 1){
+            possibleBoards--;
+        }
+        //  Is the Blank on the Leftmost Column?
+        else if((this.m_order % this.m_zeroTile) == 0) {
+            possibleBoards--;
+        }
+        //  Is the Blank on the Rightmost Column?
+        else if((this.m_order % this.m_zeroTile) == (this.m_order + 1)) {
+            possibleBoards--;
+        }
+
+        System.out.println("Boards Possible:\t" + possibleBoards);
+
         // Look at this Board.  Expand Child Boards.
+        int[] copy = null;
+        int swap = 0;
+        int target = 0;
+
+        for(int i = 0; i < possibleBoards;/* i++*/) {
+            //Copy the current Tiles
+            copy = this.m_tiles;
+
+            // Decide which Tile to Switch
+            switch(i) {
+            case 0:
+                try {
+                    target = this.m_zeroTile + 1;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            case 1:
+                try {
+                    target = this.m_zeroTile - 1;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            case 2:
+                try {
+                    target = this.m_zeroTile + this.m_order;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            case 3:
+                try {
+                    target = this.m_zeroTile - this.m_order;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            }
+            i++;
+
+            // Apply changes to the Tiles
+            swap = copy[this.m_zeroTile];
+            copy[this.m_zeroTile] = copy[target];
+            copy[target] = swap;
+
+            // Make a Board with the new Tiles
+            Board temp = new Board(this.m_order, copy);
+
+            // Add it to the Queue
+            m_neighbours.offer(temp);
+        }
 
         return(this.m_neighbours);
     }
@@ -217,17 +321,19 @@ class Board implements Comparable<Board> {
     int zeroRow() {
         if(this.m_zeRow == Integer.MIN_VALUE) {
             this.m_zeRow = 0;
-            for (int i = this.m_tiles.length - 1; i > 0; i--) {
+            for (int i = this.m_tiles.length - 1; i >= 0; i--) {
                 //this.m_zeRow++;
                 if (this.m_tiles[i] == 0) {
+                    this.m_zeroTile = i;
                     this.m_zeRow = Math.abs((int)Math.ceil((double)i
                                 / (double)this.m_order) - this.m_order);
+                    this.m_zeRow++;
                 }
             }
         //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
         }
 
-        return(this.m_zeRow + 1);
+        return(this.m_zeRow);
     }
 
     /**
@@ -240,7 +346,7 @@ class Board implements Comparable<Board> {
      *  @return  The minimum number of moves required to reach the Goal tile.
      */
     private int manhattanDist(double position, double tile) {
-        // Where is it?
+        // Where is the Tile?
         double oldCol = position % this.m_order;
         if(oldCol == 0) {
             oldCol = this.m_order;

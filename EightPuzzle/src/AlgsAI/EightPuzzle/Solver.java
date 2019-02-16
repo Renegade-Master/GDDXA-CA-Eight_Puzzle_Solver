@@ -14,6 +14,7 @@ import java.util.PriorityQueue;
 
 public class Solver {
     private PriorityQueue<Board> m_BoardQueue;
+    private int m_moves;
 
     /**
      *	Object Constructor
@@ -22,7 +23,8 @@ public class Solver {
      */
     private Solver(Board initial) {
         this.m_BoardQueue = new PriorityQueue<Board>();
-        this.m_BoardQueue.add(initial);
+        this.m_BoardQueue.offer(initial);
+        this.m_moves = 0;
     }
 
     /**
@@ -66,13 +68,24 @@ public class Solver {
     }
 
     /**
-     *	Calculate the minimum number of moves required to reach the Goal State.
+     *	Calculate the minimum number of m_moves required to reach the Goal State.
+     *  Majority of Program compute here.
      *
-     *  @return ...
+     *  @return The number of m_moves required to reach the Goal State.
      */
     private int moves() {
-        // YOUR CODE HERE
-        return(Integer.MIN_VALUE);
+        // Stay in this function until Solution is found
+        /*while (this.m_BoardQueue.peek().inversions() != 0) {*/
+            // Potential Boards
+            for (Board board : this.m_BoardQueue.peek().neighbours()) {
+                System.out.println("\nNew Board");
+                System.out.println(board.toString());
+            }
+
+            this.m_moves++;
+       /* }*/
+
+        return(this.m_moves);
     }
 
     /**
@@ -85,6 +98,7 @@ public class Solver {
         Apparently simply returning a reference to the list of Boards is
         enough.
         */
+
         return(this.m_BoardQueue);
     }
 
@@ -133,7 +147,7 @@ public class Solver {
         Solver solver = new Solver(initial);
 
         for (Board board : solver.solution()) {
-            System.out.println(board.toString());
+            //System.out.println(board.toString());
         }
 
         if(!solver.isSolvable()) {
@@ -141,7 +155,7 @@ public class Solver {
         }
         else {
             System.out.println("\nSolution possible");
-            System.out.println("Minimum number of moves = " + solver.moves());
+            System.out.println("Minimum number of m_moves = " + solver.moves());
 
             initial.m_Scoring = Board.SCORING.HAMMING;
             System.out.println("Initial Hamming Score: " + initial.hamming());
