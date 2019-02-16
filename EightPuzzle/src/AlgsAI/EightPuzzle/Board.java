@@ -204,14 +204,49 @@ class Board implements Comparable<Board> {
         // Look at this Board.  Expand Child Boards.
         int[] copy = null;
         int swap = 0;
-        for(int i = 0; i < possibleBoards; i++) {
+        int target = 0;
+
+        for(int i = 0; i < possibleBoards;/* i++*/) {
             //Copy the current Tiles
             copy = this.m_tiles;
 
+            // Decide which Tile to Switch
+            switch(i) {
+            case 0:
+                try {
+                    target = this.m_zeroTile + 1;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            case 1:
+                try {
+                    target = this.m_zeroTile - 1;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            case 2:
+                try {
+                    target = this.m_zeroTile + this.m_order;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            case 3:
+                try {
+                    target = this.m_zeroTile - this.m_order;
+                }catch (Exception e) {
+                    continue;
+                }
+                break;
+            }
+            i++;
+
             // Apply changes to the Tiles
             swap = copy[this.m_zeroTile];
-            copy[this.m_zeroTile] = copy[7];
-            copy[7] = swap;
+            copy[this.m_zeroTile] = copy[target];
+            copy[target] = swap;
 
             // Make a Board with the new Tiles
             Board temp = new Board(this.m_order, copy);

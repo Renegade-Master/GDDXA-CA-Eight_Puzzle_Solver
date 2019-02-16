@@ -75,7 +75,7 @@ public class Solver {
      */
     private int moves() {
         // Stay in this function until Solution is found
-        while (this.m_BoardQueue.peek().inversions() != 0) {
+        /*while (this.m_BoardQueue.peek().inversions() != 0) {*/
             // Potential Boards
             for (Board board : this.m_BoardQueue.peek().neighbours()) {
                 System.out.println("\nNew Board");
@@ -83,7 +83,7 @@ public class Solver {
             }
 
             this.m_moves++;
-        }
+       /* }*/
 
         return(this.m_moves);
     }
