@@ -7,9 +7,6 @@
 
 package AlgsAI.EightPuzzle;
 
-//import
-
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 class Board implements Comparable<Board> {
@@ -212,8 +209,8 @@ class Board implements Comparable<Board> {
             copy = this.m_tiles;
 
             // Apply changes to the Tiles
-            swap = copy[1];
-            copy[1] = copy[7];
+            swap = copy[this.m_zeroTile];
+            copy[this.m_zeroTile] = copy[7];
             copy[7] = swap;
 
             // Make a Board with the new Tiles
@@ -221,7 +218,6 @@ class Board implements Comparable<Board> {
 
             // Add it to the Queue
             m_neighbours.offer(temp);
-
         }
 
         return(this.m_neighbours);
