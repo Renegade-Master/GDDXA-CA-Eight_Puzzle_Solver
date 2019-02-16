@@ -211,6 +211,7 @@ class Board implements Comparable<Board> {
                 possibleBoards--;
                 leftSafe = true;
             }
+
             //  The Blank is in a very safe position
             else {
                 leftSafe = true;
@@ -222,40 +223,41 @@ class Board implements Comparable<Board> {
         System.out.println("Boards Possible:\t" + possibleBoards);
 
         // Look at this Board.  Expand Child Boards.
-        final Board refBoard = new Board(this.m_order, this.m_tiles);
-        int[][] newBoards = new int[possibleBoards][refBoard.m_tiles.length];
-        int[] newTiles = new int[refBoard.m_tiles.length];
+        //final Board refBoard = new Board(this.m_order, this.m_tiles);
+        int[][] newBoards = new int[possibleBoards][this.m_tiles.length];
+        //int[] newTiles = this.m_tiles;
         int oldValue = 0;
         int newValueIndex = 0;
 
         for(int i = 0; i < possibleBoards; i++) {
-            //Copy the current Tiles
-            newTiles = refBoard.m_tiles;
+            // Copy the current Tiles
+            //int[] newTiles = getTiles();
+            Board newBoard = makeNewBoard(this.m_tiles);
 
             // Decide which Tile to Switch
             if(leftSafe) {
-                newValueIndex = refBoard.m_zeroTile - 1;
+                newValueIndex = this.m_zeroTile - 1;
                 leftSafe = false;
             }
             else if(rightSafe) {
-                newValueIndex = refBoard.m_zeroTile + 1;
+                newValueIndex = this.m_zeroTile + 1;
                 rightSafe = false;
             }
             else if(downSafe) {
-                newValueIndex = refBoard.m_zeroTile + refBoard.m_order;
+                newValueIndex = this.m_zeroTile + this.m_order;
                 downSafe = false;
             }
             else if(upSafe) {
-                newValueIndex = refBoard.m_zeroTile - refBoard.m_order;
+                newValueIndex = this.m_zeroTile - this.m_order;
                 upSafe = false;
             }
 
             // Apply changes to the Tiles
-            oldValue = newTiles[refBoard.m_zeroTile];
-            newTiles[refBoard.m_zeroTile] = newTiles[newValueIndex];
-            newTiles[newValueIndex] = oldValue;
+            oldValue = this.m_tiles[newValueIndex];
+            newBoard.m_tiles[this.m_zeroTile] = oldValue;
+            newBoard.m_tiles[newValueIndex] = 0;
 
-            newBoards[i] = newTiles;
+            newBoards[i] = newBoard.m_tiles;
         }
 
         for(int[] tiles : newBoards) {

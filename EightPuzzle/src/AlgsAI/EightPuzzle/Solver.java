@@ -81,6 +81,8 @@ public class Solver {
             for (Board board : this.m_BoardQueue.peek().neighbours()) {
                 System.out.println("---");
                 System.out.println(board.toString());
+                System.out.println("Manhattan:\t" + board.manhattan());
+                System.out.println("Hamming:\t" + board.hamming());
             }
 
             this.m_moves++;
