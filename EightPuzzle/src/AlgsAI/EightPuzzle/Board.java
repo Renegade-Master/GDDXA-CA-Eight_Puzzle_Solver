@@ -61,7 +61,7 @@ class Board implements Comparable<Board> {
      */
     Board(int N, int [] tiles) {
         this.m_order = N;
-        this.m_tiles = new int[tiles.length * tiles.length];
+        this.m_tiles = new int[tiles.length];
         this.m_neighbours = new PriorityQueue<Board>();
 
         int z = 0;
@@ -206,12 +206,15 @@ class Board implements Comparable<Board> {
 
         // Look at this Board.  Expand Child Boards.
         int[] copy = null;
+        int swap = 0;
         for(int i = 0; i < possibleBoards; i++) {
             //Copy the current Tiles
             copy = this.m_tiles;
 
             // Apply changes to the Tiles
-
+            swap = copy[1];
+            copy[1] = copy[7];
+            copy[7] = swap;
 
             // Make a Board with the new Tiles
             Board temp = new Board(this.m_order, copy);

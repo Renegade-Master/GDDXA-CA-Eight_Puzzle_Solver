@@ -76,7 +76,8 @@ public class Solver {
 
         // Potential Boards
         for(Board board : this.m_BoardQueue.peek().neighbours()) {
-            board.toString();
+            System.out.println("\nNew Board");
+            System.out.println(board.toString());
         }
 
         return(Integer.MIN_VALUE);
