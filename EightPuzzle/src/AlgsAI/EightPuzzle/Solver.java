@@ -77,9 +77,12 @@ public class Solver {
         // Stay in this function until Solution is found
         /*while (this.m_BoardQueue.peek().inversions() != 0) {*/
             // Potential Boards
+            System.out.println("\nPotential Moves:");
             for (Board board : this.m_BoardQueue.peek().neighbours()) {
-                System.out.println("\nNew Board");
+                System.out.println("---");
                 System.out.println(board.toString());
+                System.out.println("Manhattan:\t" + board.manhattan());
+                System.out.println("Hamming:\t" + board.hamming());
             }
 
             this.m_moves++;
@@ -151,11 +154,11 @@ public class Solver {
         }
 
         if(!solver.isSolvable()) {
-            System.out.println("\nNo solution possible");
+            System.out.println("\nNo Solution possible");
         }
         else {
             System.out.println("\nSolution possible");
-            System.out.println("Minimum number of m_moves = " + solver.moves());
+            System.out.println("Minimum number of Moves = " + solver.moves());
 
             initial.m_Scoring = Board.SCORING.HAMMING;
             System.out.println("Initial Hamming Score: " + initial.hamming());
