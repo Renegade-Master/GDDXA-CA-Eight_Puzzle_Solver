@@ -14,6 +14,7 @@ import java.util.PriorityQueue;
 
 public class Solver {
     private PriorityQueue<Board> m_BoardQueue;
+    private PriorityQueue<Board> m_previousBoards;
     private int m_moves;
 
     /**
@@ -23,6 +24,7 @@ public class Solver {
      */
     private Solver(Board initial) {
         this.m_BoardQueue = new PriorityQueue<Board>();
+        this.m_previousBoards = new PriorityQueue<Board>();
         this.m_BoardQueue.offer(initial);
         this.m_moves = 0;
     }
@@ -79,21 +81,31 @@ public class Solver {
 
         // Stay in this function until Solution is found
         while (nextBoard.inversions() != 0) {
-            // Potential Boards
-            /*System.out.println("\nPotential Moves:");
-            for (Board board : this.m_BoardQueue.peek().neighbours()) {
-                System.out.println("---");
-                System.out.println(board.toString());
-                System.out.println("Manhattan:\t" + board.manhattan());
-                System.out.println("Hamming:\t" + board.hamming());
-            }*/
-            //this.m_BoardQueue.offer(this.m_BoardQueue.peek().neighbours());
-            //nextBoard = this.m_BoardQueue.peek().neighbours();
+            boolean seen = false;
 
+            // Take the next Board from the Queue
             nextBoard = nextBoard.neighbours().iterator().next();
-            //System.out.println(nextBoard.toString());
 
-            this.m_moves++;
+            // Has this Board been used already?
+            for (Board newBoard : m_previousBoards) {
+                if(newBoard.equals(nextBoard)) {
+                    seen = true;
+                }
+            }
+
+            // If this is a new Board
+            if(!seen) {
+                // Add this Board to the list of Previous Boards
+                m_previousBoards.offer(nextBoard);
+                System.out.println("Board " + this.m_moves
+                        + "\n" + nextBoard.toString());
+
+                // Increment the Moves counter
+                this.m_moves++;
+            }
+            else {
+                nextBoard.neighbours().iterator().remove();
+            }
         }
 
         System.out.println("\nSolution Found:\n" + nextBoard.toString());
