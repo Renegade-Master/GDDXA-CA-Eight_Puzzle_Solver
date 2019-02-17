@@ -14,7 +14,7 @@ import java.util.PriorityQueue;
 
 public class Solver {
     private PriorityQueue<Board> m_BoardQueue;
-    private PriorityQueue<Board> m_previousBoards;
+    private PriorityQueue<Board> m_possibleBoards;
     private int m_moves;
 
     /**
@@ -24,7 +24,7 @@ public class Solver {
      */
     private Solver(Board initial) {
         this.m_BoardQueue = new PriorityQueue<Board>();
-        this.m_previousBoards = new PriorityQueue<Board>();
+        this.m_possibleBoards = new PriorityQueue<Board>();
         this.m_BoardQueue.offer(initial);
         this.m_moves = 0;
     }
@@ -81,31 +81,36 @@ public class Solver {
 
         // Stay in this function until Solution is found
         while (nextBoard.inversions() != 0) {
-            boolean seen = false;
+            boolean seen = true;
+            this.m_possibleBoards.clear();
 
-            // Take the next Board from the Queue
-            nextBoard = nextBoard.neighbours().iterator().next();
+            // Put potential Successor Boards in a Queue
+            for(Board possibleBoard : nextBoard.neighbours()) {
+                this.m_possibleBoards.offer(possibleBoard);
+            }
 
-            // Has this Board been used already?
-            for (Board newBoard : m_previousBoards) {
-                if(newBoard.equals(nextBoard)) {
-                    seen = true;
+            while(seen) {
+                // Take the top Board from the Queue
+                nextBoard = this.m_possibleBoards.peek();
+                seen = false;
+
+                // Has this Board been used already?
+                for (Board prevBoard : this.m_BoardQueue) {
+                    if (prevBoard.equals(nextBoard)) {
+                        // Remove that Board from the Queue
+                        this.m_possibleBoards.remove(nextBoard);
+                        seen = true;
+                    }
                 }
             }
 
-            // If this is a new Board
-            if(!seen) {
-                // Add this Board to the list of Previous Boards
-                m_previousBoards.offer(nextBoard);
-                System.out.println("Board " + this.m_moves
-                        + "\n" + nextBoard.toString());
+            // Add this Board to the list of Previous Boards
+            this.m_BoardQueue.offer(nextBoard);
+            System.out.println("Board " + this.m_moves
+                    + "\n" + nextBoard.toString());
 
-                // Increment the Moves counter
-                this.m_moves++;
-            }
-            else {
-                nextBoard.neighbours().iterator().remove();
-            }
+            // Increment the Moves counter
+            this.m_moves++;
         }
 
         System.out.println("\nSolution Found:\n" + nextBoard.toString());
