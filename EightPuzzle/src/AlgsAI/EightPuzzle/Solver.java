@@ -74,6 +74,7 @@ public class Solver {
      *  @return The number of m_moves required to reach the Goal State.
      */
     private int moves() {
+        System.out.println("\nCalculating...");
         Board nextBoard = this.m_BoardQueue.peek();
 
         // Stay in this function until Solution is found
@@ -87,10 +88,15 @@ public class Solver {
                 System.out.println("Hamming:\t" + board.hamming());
             }*/
             //this.m_BoardQueue.offer(this.m_BoardQueue.peek().neighbours());
-            nextBoard = this.m_BoardQueue.peek().neighbours();
+            //nextBoard = this.m_BoardQueue.peek().neighbours();
+
+            nextBoard = nextBoard.neighbours().iterator().next();
+            //System.out.println(nextBoard.toString());
 
             this.m_moves++;
         }
+
+        System.out.println("\nSolution Found:\n" + nextBoard.toString());
 
         return(this.m_moves);
     }
@@ -149,7 +155,7 @@ public class Solver {
         }
 
         Board initial = new Board(N, tiles);
-        System.out.println("Template:\n" + initial.toString() + "\n");
+        System.out.println("Initial Board:\n" + initial.toString());
 
         Solver solver = new Solver(initial);
 
@@ -162,13 +168,14 @@ public class Solver {
         }
         else {
             System.out.println("\nSolution possible");
-            System.out.println("Minimum number of Moves = " + solver.moves());
 
             initial.m_Scoring = Board.SCORING.HAMMING;
             System.out.println("Initial Hamming Score: " + initial.hamming());
 
             initial.m_Scoring = Board.SCORING.MANHATTAN;
             System.out.println("Initial Manhattan Score: " + initial.manhattan());
+
+            System.out.println("Minimum number of Moves = " + solver.moves());
         }
     }
 }

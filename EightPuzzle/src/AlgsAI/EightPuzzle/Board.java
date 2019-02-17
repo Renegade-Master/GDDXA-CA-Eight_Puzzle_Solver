@@ -220,7 +220,7 @@ class Board implements Comparable<Board> {
                 downSafe = true;
             }
         }
-        System.out.println("Boards Possible:\t" + possibleBoards);
+        //System.out.println("Boards Possible:\t" + possibleBoards);
 
         // Look at this Board.  Expand Child Boards.
         int[][] newBoards = new int[possibleBoards][this.m_tiles.length];
@@ -344,6 +344,19 @@ class Board implements Comparable<Board> {
     }
 
     /**
+     * Returns a new Board
+     *
+     * @param   tiles       - The Tileset for the new Board.
+     *
+     * @return  A new Board
+     */
+    Board makeNewBoard(int[] tiles) {
+        Board newBoard = new Board(this.m_order, tiles);
+
+        return(newBoard);
+    }
+
+    /**
      *	Returns the Manhattan distance this tile is away from where it
      *  should be.
      *
@@ -372,19 +385,6 @@ class Board implements Comparable<Board> {
         double rowDiff = Math.abs(newRow - oldRow);
 
         return((int)(colDiff + rowDiff));
-    }
-
-    /**
-     * Returns a new Board
-     *
-     * @param   tiles       - The Tileset for the new Board.
-     *
-     * @return  A new Board
-     */
-    private Board makeNewBoard(int[] tiles) {
-        Board newBoard = new Board(this.m_order, tiles);
-
-        return(newBoard);
     }
 
     /**
