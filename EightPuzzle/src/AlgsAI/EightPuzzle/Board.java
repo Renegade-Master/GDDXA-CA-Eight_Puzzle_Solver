@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 
 class Board implements Comparable<Board> {
     enum SCORING { MANHATTAN, HAMMING }
-    SCORING m_Scoring = SCORING.HAMMING;
+    SCORING m_Scoring = SCORING.MANHATTAN;
 
     int m_order = Integer.MIN_VALUE;
 

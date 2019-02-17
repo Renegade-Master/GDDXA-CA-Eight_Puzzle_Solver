@@ -16,6 +16,7 @@ public class Solver {
     private PriorityQueue<Board> m_BoardQueue;
     private PriorityQueue<Board> m_possibleBoards;
     private int m_moves;
+    private int m_boardsGenerated;
 
     /**
      *	Object Constructor
@@ -27,6 +28,8 @@ public class Solver {
         this.m_possibleBoards = new PriorityQueue<Board>();
         this.m_BoardQueue.offer(initial);
         this.m_moves = 0;
+        this.m_boardsGenerated = 0;
+
     }
 
     /**
@@ -80,38 +83,43 @@ public class Solver {
         Board nextBoard = this.m_BoardQueue.peek();
 
         // Stay in this function until Solution is found
-        while (nextBoard.inversions() != 0) {
-            boolean seen = true;
+        do {
+            boolean seen;
             this.m_possibleBoards.clear();
 
             // Put potential Successor Boards in a Queue
             for(Board possibleBoard : nextBoard.neighbours()) {
-                this.m_possibleBoards.offer(possibleBoard);
+                if (!possibleBoard.equals(nextBoard)) {
+                    this.m_possibleBoards.offer(possibleBoard);
+                    this.m_boardsGenerated++;
+                }
             }
 
-            while(seen) {
-                // Take the top Board from the Queue
-                nextBoard = this.m_possibleBoards.peek();
+            // Repeat until a new Board is found
+            do {
+                // Take the top Board from the NeighbourQueue
+                if ((nextBoard = this.m_possibleBoards.poll()) == null) {
+                    System.out.println("PANIC");
+                }
+
                 seen = false;
 
                 // Has this Board been used already?
                 for (Board prevBoard : this.m_BoardQueue) {
                     if (prevBoard.equals(nextBoard)) {
-                        // Remove that Board from the Queue
-                        this.m_possibleBoards.remove(nextBoard);
                         seen = true;
                     }
                 }
-            }
+            } while(seen);
 
-            // Add this Board to the list of Previous Boards
+            // Add this new Board to the list of Previous Boards
             this.m_BoardQueue.offer(nextBoard);
-            System.out.println("Board " + this.m_moves
+            System.out.println("Board " + (this.m_moves + 1)
                     + "\n" + nextBoard.toString());
 
             // Increment the Moves counter
             this.m_moves++;
-        }
+        } while (nextBoard.inversions() != 0);
 
         System.out.println("\nSolution Found:\n" + nextBoard.toString());
 
@@ -186,11 +194,11 @@ public class Solver {
         else {
             System.out.println("\nSolution possible");
 
-            initial.m_Scoring = Board.SCORING.HAMMING;
+            /*initial.m_Scoring = Board.SCORING.HAMMING;
             System.out.println("Initial Hamming Score: " + initial.hamming());
 
             initial.m_Scoring = Board.SCORING.MANHATTAN;
-            System.out.println("Initial Manhattan Score: " + initial.manhattan());
+            System.out.println("Initial Manhattan Score: " + initial.manhattan());*/
 
             System.out.println("Minimum number of Moves = " + solver.moves());
         }
