@@ -87,7 +87,7 @@ public class Solver {
 			this.m_possibleBoards.clear();
 
 			// Put potential Successor Boards in a Queue
-			for(Board possibleBoard : nextBoard.neighbours()) {
+			for(Board possibleBoard : nextBoard.neighbours(this.m_BoardQueue.peek())) {
 				this.m_possibleBoards.offer(possibleBoard);
 				this.m_boardsGenerated++;
 			}
@@ -117,7 +117,8 @@ public class Solver {
 
 			// Increment the Moves counter
 			this.m_moves++;
-		} while (nextBoard.inversions() != 0);
+		} while (!(nextBoard.inversions() == 0)
+				&& !(nextBoard.getTile(-1) == 0));
 
 		System.out.println("\nSolution Found:\n" + nextBoard.toString());
 
@@ -134,6 +135,10 @@ public class Solver {
         Apparently simply returning a reference to the list of Boards is
         enough.
         */
+
+        /*
+        Instead, try to return the Queue in reverse order within this method.
+         */
 
 		return(this.m_BoardQueue);
 	}

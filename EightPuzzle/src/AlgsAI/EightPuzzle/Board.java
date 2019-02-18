@@ -168,7 +168,7 @@ class Board implements Comparable<Board> {
 	 *
 	 *  @return  ...
 	 */
-	public Iterable<Board> neighbours() {
+	public Iterable<Board> neighbours(Board prevBoard) {
 		this.m_neighbours.clear();
 
 		// Set Default conditions
@@ -286,7 +286,13 @@ class Board implements Comparable<Board> {
 
 		// Add new Boards to the Queue
 		for(int[] tiles : newBoards) {
-			this.m_neighbours.offer(makeNewBoard(tiles));
+			if(!(makeNewBoard(tiles).equals(prevBoard))) {
+				this.m_neighbours.offer(makeNewBoard(tiles));
+			}
+			else {
+				System.out.println();
+				continue;
+			}
 		}
 
 		return(this.m_neighbours);
@@ -437,7 +443,11 @@ class Board implements Comparable<Board> {
 	 *
 	 * @return  The requested value
 	 */
-	private int getTile(int i) {
+	int getTile(int i) {
+		if (i < 0) {
+			i *= -1;
+			i -= this.m_tiles.length;
+		}
 		if(i >= 0 && i <= this.m_tiles.length) {
 			int temp = this.m_tiles[i];
 			return (temp);
@@ -452,7 +462,7 @@ class Board implements Comparable<Board> {
 	 *
 	 * @return  The requested values
 	 */
-	private int[] getTiles() {
+	int[] getTiles() {
 		int[] temp = this.m_tiles;
 		return(temp);
 	}
