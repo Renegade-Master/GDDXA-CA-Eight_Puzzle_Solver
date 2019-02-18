@@ -113,6 +113,7 @@ public class Solver {
             } while(seen);
 
             // Add this new Board to the list of Previous Boards
+            System.out.println("Zero @ row: " + nextBoard.zeroRow() + " from bottom");
             this.m_BoardQueue.offer(nextBoard);
             System.out.println("Board " + (this.m_moves + 1)
                     + "\n" + nextBoard.toString());

@@ -351,7 +351,8 @@ class Board implements Comparable<Board> {
             // Otherwise
             else {
                 this.m_zeRow = (int)Math.ceil(
-                        (float)this.m_zeroTile / (float)this.m_order);
+                        (float)Math.abs(this.m_zeroTile - this.m_tiles.length)
+                        / (float)this.m_order);
                 //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
             }
         }
