@@ -210,11 +210,15 @@ class Board implements Comparable<Board> {
 			if(this.m_zeRow == this.m_order){
 				possibleBoards--;
 				downSafe = true;
+				leftSafe = true;
+				rightSafe = true;
 			}
 			//  Is the Blank on the Bottom Row?
 			else if(this.m_zeRow == 1){
 				possibleBoards--;
 				upSafe = true;
+				leftSafe = true;
+				rightSafe = true;
 			}
 
 			//  Is the Blank on the Leftmost Column?
@@ -223,6 +227,7 @@ class Board implements Comparable<Board> {
 				rightSafe = true;
 				upSafe = true;
 				downSafe = true;
+				leftSafe = false;
 			}
 			//  Is the Blank on the Rightmost Column?
 			//else if((this.m_order % this.m_zeroTile) == (this.m_order + 1)) {
@@ -231,6 +236,7 @@ class Board implements Comparable<Board> {
 				leftSafe = true;
 				upSafe = true;
 				downSafe = true;
+				rightSafe = false;
 			}
 
 			//  The Blank is in a very safe position
