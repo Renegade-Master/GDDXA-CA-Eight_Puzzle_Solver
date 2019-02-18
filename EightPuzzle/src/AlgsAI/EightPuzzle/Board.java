@@ -191,6 +191,7 @@ class Board implements Comparable<Board> {
             upSafe = true;
         }
         else {
+            //System.out.println("--Zero Row: " + this.m_zeRow);
             //  Is the Blank on the Top Row?
             if(this.m_zeRow == this.m_order){
                 possibleBoards--;
@@ -328,16 +329,31 @@ class Board implements Comparable<Board> {
     int zeroRow() {
         if(this.m_zeRow == Integer.MIN_VALUE) {
             this.m_zeRow = 0;
-            for (int i = this.m_tiles.length - 1; i >= 0; i--) {
-                //this.m_zeRow++;
+
+            // Find the Zero Tile
+            for (int i = 0; i < this.m_tiles.length; i++) {
                 if (this.m_tiles[i] == 0) {
                     this.m_zeroTile = i;
-                    this.m_zeRow = Math.abs((int)Math.ceil((double)i
-                                / (double)this.m_order) - this.m_order);
-                    this.m_zeRow++;
                 }
             }
-        //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
+
+            // Check edge cases
+            // Is it on the Top Row?
+            if (this.m_zeroTile < this.m_order) {
+                this.m_zeRow = this.m_order;
+                return(this.m_zeRow);
+            }
+            // Is it on the Bottom Row?
+            else if (this.m_zeroTile >= (this.m_tiles.length - this.m_order)) {
+                this.m_zeRow = 1;
+                return(this.m_zeRow);
+            }
+            // Otherwise
+            else {
+                this.m_zeRow = (int)Math.ceil(
+                        (float)this.m_zeroTile / (float)this.m_order);
+                //System.out.println("Zero @ row: " + this.m_zeRow + " from bottom");
+            }
         }
 
         return(this.m_zeRow);
