@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_eightpuzzle" default="compile.module.eightpuzzle">
+  <dirname property="module.eightpuzzle.basedir" file="${ant.file.module_eightpuzzle}"/>
+  
+  <property name="module.jdk.home.eightpuzzle" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.eightpuzzle" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.eightpuzzle" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.eightpuzzle" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="eightpuzzle.output.dir" value="${module.eightpuzzle.basedir}/out/production/EightPuzzle"/>
+  <property name="eightpuzzle.testoutput.dir" value="${module.eightpuzzle.basedir}/out/test/EightPuzzle"/>
+  
+  <path id="eightpuzzle.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="eightpuzzle.module.production.classpath">
+    <path refid="${module.jdk.classpath.eightpuzzle}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  <path id="eightpuzzle.runtime.production.module.classpath">
+    <pathelement location="${eightpuzzle.output.dir}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  <path id="eightpuzzle.module.classpath">
+    <path refid="${module.jdk.classpath.eightpuzzle}"/>
+    <pathelement location="${eightpuzzle.output.dir}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  <path id="eightpuzzle.runtime.module.classpath">
+    <pathelement location="${eightpuzzle.testoutput.dir}"/>
+    <pathelement location="${eightpuzzle.output.dir}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.eightpuzzle">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.eightpuzzle">
+    <patternset refid="excluded.from.module.eightpuzzle"/>
+  </patternset>
+  
+  <path id="eightpuzzle.module.sourcepath">
+    <dirset dir="${module.eightpuzzle.basedir}">
+      <include name="src"/>
+      <include name="utils"/>
+    </dirset>
+  </path>
+  
+  <path id="eightpuzzle.module.test.sourcepath">
+    <dirset dir="${module.eightpuzzle.basedir}">
+      <include name="puzzles"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.eightpuzzle" depends="compile.module.eightpuzzle.production,compile.module.eightpuzzle.tests" description="Compile module EightPuzzle"/>
+  
+  <target name="compile.module.eightpuzzle.production" depends="register.custom.compilers" description="Compile module EightPuzzle; production classes">
+    <mkdir dir="${eightpuzzle.output.dir}"/>
+    <javac2 destdir="${eightpuzzle.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.eightpuzzle}/javac">
+      <compilerarg line="${compiler.args.eightpuzzle}"/>
+      <bootclasspath refid="eightpuzzle.module.bootclasspath"/>
+      <classpath refid="eightpuzzle.module.production.classpath"/>
+      <src refid="eightpuzzle.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.eightpuzzle"/>
+    </javac2>
+    
+    <copy todir="${eightpuzzle.output.dir}">
+      <fileset dir="${module.eightpuzzle.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.eightpuzzle.basedir}/utils">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.eightpuzzle.tests" depends="register.custom.compilers,compile.module.eightpuzzle.production" description="compile module EightPuzzle; test classes" unless="skip.tests">
+    <mkdir dir="${eightpuzzle.testoutput.dir}"/>
+    <javac2 destdir="${eightpuzzle.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.eightpuzzle}/javac">
+      <compilerarg line="${compiler.args.eightpuzzle}"/>
+      <bootclasspath refid="eightpuzzle.module.bootclasspath"/>
+      <classpath refid="eightpuzzle.module.classpath"/>
+      <src refid="eightpuzzle.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.eightpuzzle"/>
+    </javac2>
+    
+    <copy todir="${eightpuzzle.testoutput.dir}">
+      <fileset dir="${module.eightpuzzle.basedir}/puzzles">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.eightpuzzle" description="cleanup module">
+    <delete dir="${eightpuzzle.output.dir}"/>
+    <delete dir="${eightpuzzle.testoutput.dir}"/>
+  </target>
+</project>
