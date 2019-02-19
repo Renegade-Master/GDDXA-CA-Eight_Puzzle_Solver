@@ -9,6 +9,6 @@ script:
 #  - pwd
 #  - ant -version
   - ant -buildfile EightPuzzle\\build.xml
-  - ant -buildfile "\EightPuzzle\build.xml"
+  - ant -buildfile "EightPuzzle\\build.xml"
 #  - ant EightPuzzle\\build
 #  - ant EightPuzzle/build
