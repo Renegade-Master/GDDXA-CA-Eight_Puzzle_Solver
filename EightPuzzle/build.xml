@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eightpuzzle" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.klib"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module EightPuzzle -->
+  
+  <dirname property="module.eightpuzzle.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.eightpuzzle" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="eightpuzzle.output.dir" value="${module.eightpuzzle.basedir}/out/production/EightPuzzle"/>
+  <property name="eightpuzzle.testoutput.dir" value="${module.eightpuzzle.basedir}/out/test/EightPuzzle"/>
+  
+  <path id="eightpuzzle.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="eightpuzzle.module.production.classpath">
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  <path id="eightpuzzle.runtime.production.module.classpath">
+    <pathelement location="${eightpuzzle.output.dir}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  <path id="eightpuzzle.module.classpath">
+    <pathelement location="${eightpuzzle.output.dir}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  <path id="eightpuzzle.runtime.module.classpath">
+    <pathelement location="${eightpuzzle.testoutput.dir}"/>
+    <pathelement location="${eightpuzzle.output.dir}"/>
+    <pathelement location="${basedir}/utils/algs4.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.eightpuzzle">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.eightpuzzle">
+    <patternset refid="excluded.from.module.eightpuzzle"/>
+  </patternset>
+  
+  <path id="eightpuzzle.module.sourcepath">
+    <dirset dir="${module.eightpuzzle.basedir}">
+      <include name="src"/>
+      <include name="utils"/>
+    </dirset>
+  </path>
+  
+  <path id="eightpuzzle.module.test.sourcepath">
+    <dirset dir="${module.eightpuzzle.basedir}">
+      <include name="puzzles"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.eightpuzzle" depends="compile.module.eightpuzzle.production,compile.module.eightpuzzle.tests" description="Compile module EightPuzzle"/>
+  
+  <target name="compile.module.eightpuzzle.production" description="Compile module EightPuzzle; production classes">
+    <mkdir dir="${eightpuzzle.output.dir}"/>
+    <javac destdir="${eightpuzzle.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.eightpuzzle}"/>
+      <bootclasspath refid="eightpuzzle.module.bootclasspath"/>
+      <classpath refid="eightpuzzle.module.production.classpath"/>
+      <src refid="eightpuzzle.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.eightpuzzle"/>
+    </javac>
+    
+    <copy todir="${eightpuzzle.output.dir}">
+      <fileset dir="${module.eightpuzzle.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.eightpuzzle.basedir}/utils">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.eightpuzzle.tests" depends="compile.module.eightpuzzle.production" description="compile module EightPuzzle; test classes" unless="skip.tests">
+    <mkdir dir="${eightpuzzle.testoutput.dir}"/>
+    <javac destdir="${eightpuzzle.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.eightpuzzle}"/>
+      <bootclasspath refid="eightpuzzle.module.bootclasspath"/>
+      <classpath refid="eightpuzzle.module.classpath"/>
+      <src refid="eightpuzzle.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.eightpuzzle"/>
+    </javac>
+    
+    <copy todir="${eightpuzzle.testoutput.dir}">
+      <fileset dir="${module.eightpuzzle.basedir}/puzzles">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.eightpuzzle" description="cleanup module">
+    <delete dir="${eightpuzzle.output.dir}"/>
+    <delete dir="${eightpuzzle.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.eightpuzzle" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.eightpuzzle" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
